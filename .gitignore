@@ -1,0 +1,22 @@
+target
+*.iml
+*.ipr
+*.iws
+.idea/
+.*
+!.gitignore
+!.openshift
+*~
+
+# KDE
+.directory
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+*rebel.xml
+*persistence.xml
