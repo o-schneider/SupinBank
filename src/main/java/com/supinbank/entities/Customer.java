@@ -1,5 +1,13 @@
 package com.supinbank.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * Created by IntelliJ IDEA.
  * Customer: oli
@@ -12,20 +20,46 @@ package com.supinbank.entities;
 public class Customer
 {
     @Id
-    @GeneratedValue(GenerationType.INCREMENTAL)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
+    @NotNull
+    @Size(min = 1, max = 50)
     private String firstName;
 
+    @NotNull
+    @Size(min = 1, max = 50)
     private String lastName;
 
+    @NotNull
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9" +
+            "])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+    @Size(min = 1, max = 50)
     private String email;
 
+    @NotNull
+    @Size(min = 1, max = 50)
     private String address;
 
-    private int zipCode;
+    @NotNull
+    private Integer zipCode;
 
+    @NotNull
+    @Size(min = 1, max = 50)
     private String city;
 
-    private int phone;
+    @NotNull
+    private Integer phone;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     public String getFirstName()
     {
@@ -67,12 +101,12 @@ public class Customer
         this.address = address;
     }
 
-    public int getZipCode()
+    public Integer getZipCode()
     {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode)
+    public void setZipCode(Integer zipCode)
     {
         this.zipCode = zipCode;
     }
@@ -87,12 +121,12 @@ public class Customer
         this.city = city;
     }
 
-    public int getPhone()
+    public Integer getPhone()
     {
         return phone;
     }
 
-    public void setPhone(int phone)
+    public void setPhone(Integer phone)
     {
         this.phone = phone;
     }
