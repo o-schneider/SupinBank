@@ -8,14 +8,48 @@
     <name>SupinBank Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
+    <properties>
+        <junit-version>4.8.2</junit-version>
+        <hibernate-version>4.1.0.Final</hibernate-version>
+        <slf4j-version>1.5.5</slf4j-version>
+        <jstl-version>1.2</jstl-version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <version>${junit-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl-version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
+
+
     <build>
         <finalName>SupinBank</finalName>
 

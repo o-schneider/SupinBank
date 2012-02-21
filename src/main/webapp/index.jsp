@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2>Hell fuck YEAH<h2>
+<h2>Hello world<h2>
 </body>
 </html>
