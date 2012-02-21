@@ -1,12 +1,10 @@
 package com.supinbank.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,6 +25,8 @@ public class Account
     private String name;
 
     @NotNull
+    @JoinColumn
+    @ManyToOne
     private InterestPlan interestPlan;
 
     @NotNull
@@ -34,6 +34,10 @@ public class Account
 
     @NotNull
     private BigDecimal balance;
+
+    @JoinColumn
+    @OneToMany
+    private List<Operation> operations;
 
     public int getId()
     {
@@ -83,5 +87,15 @@ public class Account
     public void setBalance(BigDecimal balance)
     {
         this.balance = balance;
+    }
+
+    public List<Operation> getOperations()
+    {
+        return operations;
+    }
+
+    public void setOperations(List<Operation> operations)
+    {
+        this.operations = operations;
     }
 }
