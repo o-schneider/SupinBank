@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 @Entity
-public class Customer
+public class Customer extends User
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,12 +28,6 @@ public class Customer
     @NotNull
     @Size(min = 1, max = 50)
     private String lastName;
-
-    @NotNull
-    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9" +
-            "])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-    @Size(min = 1, max = 50)
-    private String email;
 
     @NotNull
     @Size(min = 1, max = 50)
@@ -93,16 +87,6 @@ public class Customer
         this.lastName = lastName;
     }
 
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
     public String getAddress()
     {
         return address;
@@ -142,4 +126,5 @@ public class Customer
     {
         this.phone = phone;
     }
+
 }

@@ -11,3 +11,7 @@ body {
 .login-form .btn{
     margin: 0px!important;
 }
+
+#loginErrorMsg{
+    float:right;
+}

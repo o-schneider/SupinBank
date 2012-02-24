@@ -10,9 +10,8 @@
 
     <properties>
         <junit-version>4.8.2</junit-version>
-        <hibernate-version>4.1.0.Final</hibernate-version>
         <slf4j-version>1.5.5</slf4j-version>
-        <jstl-version>1.2</jstl-version>
+        <javaee-version>6.0</javaee-version>
     </properties>
 
     <dependencies>
@@ -23,16 +22,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate-version}</version>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee-version}</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-version}</version>
         </dependency>
 
         <dependency>
@@ -41,12 +34,6 @@
             <version>${slf4j-version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${jstl-version}</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
 
@@ -58,7 +45,6 @@
             <plugin>
                 <groupId>org.zeroturnaround</groupId>
                 <artifactId>jrebel-maven-plugin</artifactId>
-                <version>1.1.1</version>
                 <executions>
                     <execution>
                         <id>generate-rebel-xml</id>
