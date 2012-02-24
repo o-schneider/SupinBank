@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,7 +15,7 @@ import javax.validation.constraints.Size;
  */
 
 @Entity
-public class Customer
+public class Customer extends User
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,12 +30,6 @@ public class Customer
     private String lastName;
 
     @NotNull
-    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9" +
-            "])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-    @Size(min = 1, max = 50)
-    private String email;
-
-    @NotNull
     @Size(min = 1, max = 50)
     private String address;
 
@@ -47,6 +42,20 @@ public class Customer
 
     @NotNull
     private Integer phone;
+
+    @JoinColumn
+    @OneToMany
+    private List<Account> accounts;
+
+    public List<Account> getAccounts()
+    {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts)
+    {
+        this.accounts = accounts;
+    }
 
     public int getId()
     {
@@ -76,16 +85,6 @@ public class Customer
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
-    }
-
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
     }
 
     public String getAddress()
@@ -127,4 +126,5 @@ public class Customer
     {
         this.phone = phone;
     }
+
 }

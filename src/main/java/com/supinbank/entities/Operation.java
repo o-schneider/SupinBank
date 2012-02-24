@@ -29,6 +29,10 @@ public class Operation
     @NotNull
     private BigDecimal amount;
 
+    @JoinColumn
+    @ManyToOne
+    private Account account;
+
     public int getId()
     {
         return id;
@@ -67,5 +71,15 @@ public class Operation
     public void setAmount(BigDecimal amount)
     {
         this.amount = amount;
+    }
+
+    public Account getAccount()
+    {
+        return account;
+    }
+
+    public void setAccount(Account account)
+    {
+        this.account = account;
     }
 }

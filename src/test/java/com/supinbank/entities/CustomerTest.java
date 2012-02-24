@@ -109,21 +109,6 @@ public class CustomerTest
     }
 
     @Test
-    public void checkTooBigFirstName()
-    {
-        customer.setFirstName(generateBigString());
-        Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
-        assertTrue(violations.size() >= 1);
-        customer.setFirstName("John");
-    }
-
-    @Test
-    public void checkNullLastName()
-    {
-
-    }
-
-    @Test
     public void checkEmptyLastName()
     {
         customer.setLastName("");
@@ -175,7 +160,6 @@ public class CustomerTest
         Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
         assertTrue(violations.size() >= 1);
         customer.setPhone(0102030405);
-
     }
 
     @Test
@@ -185,15 +169,5 @@ public class CustomerTest
         Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
         assertTrue(violations.size() >= 1);
         customer.setCity("Nowhere");
-    }
-    
-    private static String generateBigString()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0; i < 60; i++)
-        {
-            stringBuilder.append("a");
-        }
-        return stringBuilder.toString();
     }
 }

@@ -8,34 +8,19 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap-responsive.min.css"/>
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/layout.css"/>
     <link rel="script" href="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"/>
-    <title>SupinBank - Welome</title>
+    <title>SupinBank - Admin</title>
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="brand" href="#">SupinBank</a>
-            <form method="POST" class="login-form form-inline">
-                <input type="text" name="email" />
-                <input type="password" name="password" class="input-small"/>
-                <input type="submit" class="btn" >Sign in</input>
-            </form>
+
         </div>
     </div>
 </div>
 <div class="container">
-    <c:choose>
-        <c:when test="${loginFailed}">
-            <div id="loginErrorMsg" class="alert alert-error ">
-                <p>Wrong user name or password. Please try again.</p>
-            </div>
-        </c:when>
-    </c:choose>
-
-    <h1>Welcome!</h1>
+    <h1>Admin</h1>
     <hr/>
-    <h2>Welcome to SupinBank</h2>
-
-</div>
 </body>
 </html>
