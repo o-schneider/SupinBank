@@ -55,19 +55,23 @@ public class AddAccountServlet extends HttpServlet
         Account account = new Account();
 
         Random rand = new Random(System.currentTimeMillis());
-        String password = Long.toString(rand.nextLong()+rand.nextLong());
 
-        try
+
+        if (genericCrudService.read(Customer.class, customer.getId()) == null)
         {
-            customer.setPassword(passwordService.createHash(customer.getEmail()));
-        } catch (Exception e)
-        {
-            e.printStackTrace();
+            String password = Long.toString(rand.nextLong() + rand.nextLong());
+
+            try
+            {
+                customer.setPassword(passwordService.createHash(customer.getEmail()));
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            genericCrudService.create(customer);
+            mailService.sendConfirmationMail(customer, password);
         }
-
-        genericCrudService.create(customer);
-
-        mailService.sendConfirmationMail(customer, password);
 
         int interestPlanId = Integer.parseInt(request.getParameter("plan"));
         InterestPlan plan = genericCrudService.read(InterestPlan.class, interestPlanId);
