@@ -14,7 +14,7 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand" href="#">SupinBank</a>
+            <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
             <ul class="nav">
                 <li class="active">
                     <a href="${pageContext.servletContext.contextPath}/admin/customers">List customers</a>
@@ -33,8 +33,33 @@
     </div>
 </div>
 <div class="container">
-    <h1>Admin</h1>
+    <h1>Customer list</h1>
     <hr/>
+
+    <c:choose>
+        <c:when test="${empty customers}">
+            <h3>No customers found</h3>
+        </c:when>
+        <c:otherwise>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${customers}" var="customer">
+                    <tr>
+                        <td>${customer.firstName} ${customer.lastName}</td>
+                        <td>${customer.email}</td>
+                        <td><a href="/admin/accounts?id=${customer.id}">Details</a></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:otherwise>
+    </c:choose>
 </div>
 </body>
 </html>

@@ -3,7 +3,6 @@ package com.supinbank.web.servlet;
 import com.supinbank.entities.BankAdvisor;
 import com.supinbank.entities.Customer;
 import com.supinbank.entities.User;
-import com.supinbank.exceptions.SystemErrorException;
 import com.supinbank.services.AuthenticationService;
 import com.supinbank.services.PasswordService;
 
@@ -41,18 +40,22 @@ public class LoginServlet extends HttpServlet
         {
             String hashedPassword = passwordService.createHash(password);
             User user = authenticationService.authenticate(email, hashedPassword);
-            request.getSession().setAttribute("user", user);
-            if (user instanceof BankAdvisor)
-            {
-                response.sendRedirect(getServletContext().getContextPath() + "/admin/customers");
-            } else if (user instanceof Customer)
-            {
-
-            } else
+            if (user == null)
             {
                 request.setAttribute("loginFailed", true);
                 request.setAttribute("loginFailedMsg", "Wrong username or password. Please try again");
                 doGet(request, response);
+            } else
+            {
+                request.getSession().setAttribute("user", user);
+                if (user instanceof BankAdvisor)
+                {
+                    request.getSession().setAttribute("admin", true);
+                    response.sendRedirect(getServletContext().getContextPath() + "/admin/customers");
+                } else if (user instanceof Customer)
+                {
+                    request.getSession().setAttribute("admin", false);
+                }
             }
         } catch (Exception e)
         {
