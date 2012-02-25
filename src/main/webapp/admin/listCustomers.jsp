@@ -15,12 +15,26 @@
     <div class="navbar-inner">
         <div class="container">
             <a class="brand" href="#">SupinBank</a>
+            <ul class="nav">
+                <li class="active">
+                    <a href="${pageContext.servletContext.contextPath}/admin/customers">List customers</a>
+                </li>
+                <li>
+                    <a href="${pageContext.servletContext.contextPath}/admin/customers/new">Add customer</a>
+                </li>
+            </ul>
 
+            <ul class="nav pull-right">
+                <li>
+                    <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
 <div class="container">
     <h1>Admin</h1>
     <hr/>
+</div>
 </body>
 </html>

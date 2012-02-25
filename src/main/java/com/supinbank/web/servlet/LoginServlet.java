@@ -51,11 +51,13 @@ public class LoginServlet extends HttpServlet
             } else
             {
                 request.setAttribute("loginFailed", true);
+                request.setAttribute("loginFailedMsg", "Wrong username or password. Please try again");
                 doGet(request, response);
             }
-        } catch (SystemErrorException e)
+        } catch (Exception e)
         {
-            Logger.getGlobal().severe("Error occurred" + e.getMessage());
+            request.setAttribute("loginFailed", true);
+            request.setAttribute("loginFailedMsg", "An error occurred. Please contact the support");
             doGet(request, response);
         }
     }
