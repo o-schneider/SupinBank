@@ -25,7 +25,7 @@ public class User
 
     @NotNull
     @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9" +
-            "])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+            "])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "email wrongly formatted")
     @Size(min = 1, max = 50)
     private String email;
 

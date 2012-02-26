@@ -2,6 +2,7 @@ package com.supinbank.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -24,6 +25,7 @@ public class Operation
     private Date date;
 
     @NotNull
+    @Size(min = 1, max = 255)
     private String wording;
 
     @NotNull

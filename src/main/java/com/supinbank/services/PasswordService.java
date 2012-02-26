@@ -1,6 +1,5 @@
 package com.supinbank.services;
 
-import com.supinbank.exceptions.SystemErrorException;
 
 import javax.ejb.Stateless;
 import java.io.UnsupportedEncodingException;
@@ -20,7 +19,7 @@ import java.util.Formatter;
 public class PasswordService
 {
 
-    public String createHash(String password) throws SystemErrorException
+    public String createHash(String password) throws Exception
     {
         MessageDigest md = null;
         try
@@ -29,10 +28,10 @@ public class PasswordService
             md.update(password.getBytes("UTF-8"));
         } catch (NoSuchAlgorithmException e)
         {
-            throw new SystemErrorException(e.getMessage());
+            throw new Exception(e.getMessage());
         } catch (UnsupportedEncodingException e)
         {
-            throw new SystemErrorException(e.getMessage());
+            throw new Exception(e.getMessage());
         }
 
         byte raw[] = md.digest();

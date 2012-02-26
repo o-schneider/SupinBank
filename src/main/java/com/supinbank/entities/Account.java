@@ -29,15 +29,24 @@ public class Account
     @ManyToOne
     private InterestPlan interestPlan;
 
-    @NotNull
     private BigDecimal amount;
 
-    @NotNull
-    private BigDecimal balance;
-
-    @JoinColumn
     @OneToMany
     private List<Operation> operations;
+
+    @JoinColumn
+    @ManyToOne
+    private Customer accountOwner;
+
+    public Customer getAccountOwner()
+    {
+        return accountOwner;
+    }
+
+    public void setAccountOwner(Customer accountOwner)
+    {
+        this.accountOwner = accountOwner;
+    }
 
     public int getId()
     {
@@ -77,16 +86,6 @@ public class Account
     public void setAmount(BigDecimal amount)
     {
         this.amount = amount;
-    }
-
-    public BigDecimal getBalance()
-    {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance)
-    {
-        this.balance = balance;
     }
 
     public List<Operation> getOperations()
