@@ -6,6 +6,7 @@ import com.supinbank.entities.InterestPlan;
 import com.supinbank.services.GenericCrudService;
 import com.supinbank.services.MailService;
 import com.supinbank.services.PasswordService;
+import com.supinbank.web.utils.ValidationUtil;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -52,7 +54,31 @@ public class AddAccountServlet extends HttpServlet
     {
         Customer customer = (Customer) request.getAttribute("customer");
 
+        if (customer == null)
+        {
+            doGet(request, response);
+            return;
+        }
+
         Account account = new Account();
+
+        int interestPlanId = Integer.parseInt(request.getParameter("plan"));
+        InterestPlan plan = genericCrudService.read(InterestPlan.class, interestPlanId);
+
+        account.setName(request.getParameter("name"));
+
+        if (!ValidationUtil.validate(account, "name", request))
+        {
+            request.setAttribute("customer", customer);
+            request.setAttribute("[FLASH]customer", customer);
+            request.setAttribute("account", account);
+            doGet(request, response);
+            return;
+        }
+
+        account.setInterestPlan(plan);
+        account.setAccountOwner(customer);
+        account.setAmount(new BigDecimal(0));
 
         Random rand = new Random(System.currentTimeMillis());
 
@@ -78,12 +104,6 @@ public class AddAccountServlet extends HttpServlet
             outputServlet = "/admin/accounts?id=" + customer.getId();
         }
 
-        int interestPlanId = Integer.parseInt(request.getParameter("plan"));
-        InterestPlan plan = genericCrudService.read(InterestPlan.class, interestPlanId);
-
-        account.setName(request.getParameter("name"));
-        account.setInterestPlan(plan);
-        account.setAccountOwner(customer);
 
         genericCrudService.create(account);
 

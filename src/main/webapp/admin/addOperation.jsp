@@ -33,21 +33,21 @@
     </div>
 </div>
 <div class="container">
-    <h1>Add account</h1>
+    <h1>New operation</h1>
     <hr/>
     <fieldset>
-        <legend>Account for ${customer.firstName} ${customer.lastName}</legend>
+        <legend>Account ${account.name} owned by ${account.accountOwner.firstName} ${account.accountOwner.lastName}</legend>
 
         <form method="post" class="form-horizontal">
             <div class="control-group">
-                <label class="control-label" for="name">Name</label>
+                <label class="control-label" for="amount">Amount</label>
 
                 <div class="controls">
-                    <input type="text" name="name" class="input-xlarge" id="name" value="${account.name}">
-                    <c:if test="${not empty nameError}">
+                    <input type="text" name="amount" class="input-xlarge" id="amount" value="${operation.amount}">
+                    <c:if test="${not empty amountError}">
                         <div class="help-block alert alert-error">
                             <ul>
-                                <c:forEach items="${nameError}" var="error">
+                                <c:forEach items="${amountError}" var="error">
                                     <li>${error}</li>
                                 </c:forEach>
                             </ul>
@@ -56,18 +56,24 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="plan">Interest plan</label>
+                <label class="control-label" for="wording">Wording</label>
 
                 <div class="controls">
-                    <select name="plan" id="plan">
-                        <c:forEach items="${interestPlans}" var="plan">
-                            <option value="${plan.id}">${plan.name}</option>
-                        </c:forEach>
-                    </select>
+                    <input type="text" name="wording" class="input-xlarge" id="wording" value="${operation.wording}">
+                    <c:if test="${not empty wordingError}">
+                        <div class="help-block alert alert-error">
+                            <ul>
+                                <c:forEach items="${wordingError}" var="error">
+                                    <li>${error}</li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </c:if>
                 </div>
             </div>
             <div class="form-actions">
-                <input type="submit" class="btn btn-primary" value="Add account"/>
+                <input type="hidden" value="${account.id}" name="account">
+                <input type="submit" class="btn btn-primary" value="Ok"/>
             </div>
         </form>
     </fieldset>

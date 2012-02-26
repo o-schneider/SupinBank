@@ -1,6 +1,8 @@
 package com.supinbank.web.servlet;
 
 import com.supinbank.entities.Customer;
+import com.supinbank.web.utils.ValidationUtil;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,35 +45,37 @@ public class AddCustomerServlet extends HttpServlet
         customer.setAddress(request.getParameter("address"));
         customer.setCity(request.getParameter("city"));
 
+        boolean validPhone;
         try
         {
             customer.setPhone(Integer.parseInt(request.getParameter("phone")));
+            validPhone = ValidationUtil.validate(customer, "phone", request);
         } catch (NumberFormatException e)
         {
-            valid = false;
-            request.setAttribute("phoneError", "It should be a number");
+            validPhone = false;
+            List<String> errors = new ArrayList<String>();
+            errors.add("It should be a number");
+            request.setAttribute("phoneError", errors);
         }
 
+        boolean validZipCode;
         try
         {
             customer.setZipCode(Integer.parseInt(request.getParameter("zip")));
+            validZipCode = ValidationUtil.validate(customer, "zipCode", request);
         } catch (NumberFormatException e)
         {
-            valid = false;
-            request.setAttribute("zipCodeError", "It should be a number");
+            validZipCode = false;
+            List<String> errors = new ArrayList<String>();
+            errors.add("It should be a number");
+            request.setAttribute("zipCodeError", errors);
         }
 
-
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        boolean validFirstname = validate(customer, "firstName", validator, request);
-        boolean validLastname = validate(customer, "lastName", validator, request);
-        boolean validEmail = validate(customer, "email", validator, request);
-        boolean validAddress = validate(customer, "address", validator, request);
-        boolean validCity = validate(customer, "city", validator, request);
-        boolean validZipCode = validate(customer, "zipCode", validator, request);
-        boolean validPhone = validate(customer, "phone", validator, request);
+        boolean validFirstname = ValidationUtil.validate(customer, "firstName", request);
+        boolean validLastname = ValidationUtil.validate(customer, "lastName", request);
+        boolean validEmail = ValidationUtil.validate(customer, "email", request);
+        boolean validAddress = ValidationUtil.validate(customer, "address", request);
+        boolean validCity = ValidationUtil.validate(customer, "city", request);
 
         valid = valid && validAddress && validCity && validEmail && validFirstname && validLastname && validPhone && validZipCode;
 
@@ -84,25 +88,5 @@ public class AddCustomerServlet extends HttpServlet
             request.setAttribute("customer", customer);
             doGet(request, response);
         }
-    }
-
-    private boolean validate(Customer customer, String property, Validator validator, HttpServletRequest request)
-    {
-        boolean valid = true;
-
-        Set<ConstraintViolation<Customer>> violations = validator.validateProperty(customer, property);
-
-        if (!violations.isEmpty())
-        {
-            valid = false;
-            List<String> errors = new ArrayList<String>();
-            for (ConstraintViolation violation : violations)
-            {
-                errors.add(violation.getMessage());
-            }
-            request.setAttribute(property + "Error", errors);
-        }
-
-        return valid;
     }
 }

@@ -31,9 +31,6 @@ public class Account
 
     private BigDecimal amount;
 
-    private BigDecimal balance;
-
-    @JoinColumn
     @OneToMany
     private List<Operation> operations;
 
@@ -89,16 +86,6 @@ public class Account
     public void setAmount(BigDecimal amount)
     {
         this.amount = amount;
-    }
-
-    public BigDecimal getBalance()
-    {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance)
-    {
-        this.balance = balance;
     }
 
     public List<Operation> getOperations()

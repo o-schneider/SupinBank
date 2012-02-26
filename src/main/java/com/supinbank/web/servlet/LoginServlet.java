@@ -55,6 +55,7 @@ public class LoginServlet extends HttpServlet
                 } else if (user instanceof Customer)
                 {
                     request.getSession().setAttribute("admin", false);
+                    response.sendRedirect(getServletContext().getContextPath() + "/customer/accounts");
                 }
             }
         } catch (Exception e)

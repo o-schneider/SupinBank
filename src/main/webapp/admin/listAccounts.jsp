@@ -47,7 +47,7 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Balance</th>
+                <th>Amount</th>
                 <th>Interest plan</th>
             </tr>
         </thead>
@@ -56,8 +56,9 @@
                 <tr>
                     <td>${account.id}</td>
                     <td>${account.name}</td>
-                    <td>${account.balance}</td>
+                    <td>${account.amount}</td>
                     <td>${account.interestPlan.name}</td>
+                    <td><a href="${pageContext.servletContext.contextPath}/admin/operations/new?id=${account.id}">Add operation</a></td>
                 </tr>
             </c:forEach>
         </tbody>
