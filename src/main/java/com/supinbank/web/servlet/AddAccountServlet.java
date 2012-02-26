@@ -56,6 +56,7 @@ public class AddAccountServlet extends HttpServlet
 
         Random rand = new Random(System.currentTimeMillis());
 
+        String outputServlet;
 
         if (genericCrudService.read(Customer.class, customer.getId()) == null)
         {
@@ -71,6 +72,10 @@ public class AddAccountServlet extends HttpServlet
 
             genericCrudService.create(customer);
             mailService.sendConfirmationMail(customer, password);
+            outputServlet = "/admin/customers";
+        } else
+        {
+            outputServlet = "/admin/accounts?id=" + customer.getId();
         }
 
         int interestPlanId = Integer.parseInt(request.getParameter("plan"));
@@ -91,7 +96,7 @@ public class AddAccountServlet extends HttpServlet
 
         genericCrudService.update(customer);
 
-        response.sendRedirect(getServletContext().getContextPath() + "/admin/customers");
+        response.sendRedirect(getServletContext().getContextPath() + outputServlet);
     }
 
     public GenericCrudService getGenericCrudService()
