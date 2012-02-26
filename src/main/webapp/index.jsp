@@ -15,19 +15,33 @@
     <div class="navbar-inner">
         <div class="container">
             <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
-            <c:if test="${admin}">
-                <ul class="nav">
-                    <li class="active">
-                        <a href="${pageContext.servletContext.contextPath}/admin/customers">List customers</a>
-                    </li>
-                    <li>
-                        <a href="${pageContext.servletContext.contextPath}/admin/customers/new">Add customer</a>
-                    </li>
-                </ul>
-            </c:if>
+
 
             <c:choose>
                 <c:when test="${not empty user}">
+                    <c:if test="${admin}">
+                        <ul class="nav">
+                            <li>
+                                <a href="${pageContext.servletContext.contextPath}/admin/customers">List customers</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.servletContext.contextPath}/admin/customers/new">Add customer</a>
+                            </li>
+                        </ul>
+                    </c:if>
+                    <c:if test="${not admin}">
+                        <ul class="nav">
+                            <li>
+                                <a href="${pageContext.servletContext.contextPath}/customer/accounts">My accounts</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.servletContext.contextPath}/customer/operations">My operations</a>
+                            </li>
+                            <li>
+                                <a href="#">Perform a transfer</a>
+                            </li>
+                        </ul>
+                    </c:if>
                     <ul class="nav pull-right">
                         <li>
                             <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>

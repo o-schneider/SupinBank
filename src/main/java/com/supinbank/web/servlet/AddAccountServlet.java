@@ -90,7 +90,7 @@ public class AddAccountServlet extends HttpServlet
 
             try
             {
-                customer.setPassword(passwordService.createHash(customer.getEmail()));
+                customer.setPassword(passwordService.createHash(password));
             } catch (Exception e)
             {
                 e.printStackTrace();

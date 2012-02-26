@@ -18,8 +18,8 @@ import java.io.IOException;
  * Time: 10:42 PM
  * To change this template use File | Settings | File Templates.
  */
-@WebServlet(name = "ListAccountsServlet", urlPatterns = "/admin/accounts")
-public class ListAccountsServlet extends HttpServlet
+@WebServlet(name = "ListAccountsAdminServlet", urlPatterns = "/admin/accounts")
+public class ListAccountsAdminServlet extends HttpServlet
 {
     @Inject
     private GenericCrudService genericCrudService;
