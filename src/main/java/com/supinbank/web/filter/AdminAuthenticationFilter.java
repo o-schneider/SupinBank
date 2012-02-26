@@ -16,7 +16,7 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 @WebFilter(filterName = "AdminAuthenticationFilter", urlPatterns = "/admin/*")
-public class AdminAuthenticationFilter implements javax.servlet.Filter
+public class AdminAuthenticationFilter implements Filter
 {
     public void destroy()
     {

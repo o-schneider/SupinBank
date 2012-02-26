@@ -33,12 +33,6 @@ public class AccountTest
     }
 
     @Test
-    public void hasBalance()
-    {
-        account.getBalance();
-    }
-
-    @Test
     public void hasAmount()
     {
         account.getAmount();

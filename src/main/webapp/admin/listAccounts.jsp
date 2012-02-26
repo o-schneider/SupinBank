@@ -33,33 +33,36 @@
     </div>
 </div>
 <div class="container">
-    <h1>Customer list</h1>
+    <h1>${customer.firstName} ${customer.lastName} accounts</h1>
     <hr/>
-
-    <c:choose>
-        <c:when test="${empty customers}">
-            <h3>No customers found</h3>
-        </c:when>
-        <c:otherwise>
-            <table class="table table-striped">
-                <thead>
+    <p>Email : ${customer.email}</p>
+    <div class="pull-right">
+        <form method="post">
+            <input type="hidden" name="id" class="${customer.id}" />
+            <input type="submit" class="btn btn-primary" value="Add account"/>
+        </form>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Interest plan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach items="${customer.accounts}" var="account">
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <td>${account.id}</td>
+                    <td>${account.name}</td>
+                    <td>${account.amount}</td>
+                    <td>${account.interestPlan.name}</td>
+                    <td><a href="${pageContext.servletContext.contextPath}/admin/operations/new?id=${account.id}">Add operation</a></td>
                 </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${customers}" var="customer">
-                    <tr>
-                        <td>${customer.firstName} ${customer.lastName}</td>
-                        <td>${customer.email}</td>
-                        <td><a href="${pageContext.servletContext.contextPath}/admin/accounts?id=${customer.id}">Details</a></td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </c:otherwise>
-    </c:choose>
+            </c:forEach>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
