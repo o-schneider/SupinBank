@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.Date,java.text.SimpleDateFormat,java.text.ParseException" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,10 +20,10 @@
         <div class="container">
             <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
             <ul class="nav">
-                <li class="active">
+                <li>
                     <a href="${pageContext.servletContext.contextPath}/customer/accounts">My accounts</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="${pageContext.servletContext.contextPath}/customer/operations">My operations</a>
                 </li>
                 <li class="dropdown">
@@ -51,26 +52,60 @@
     </div>
 </div>
 <div class="container">
-    <h1>${user.firstName} ${user.lastName} accounts</h1>
+    <h1>Operations</h1>
     <hr/>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach items="${accounts}" var="account">
-                <tr>
-                    <td>${account.id}</td>
-                    <td><a href="${pageContext.servletContext.contextPath}/customer/operations?accountId=${account.id}">${account.name}</a></td>
-                    <td>${account.amount}</td>
-                </tr>
+
+    <form method="get" class="form-inline">
+        <label>Select your account </label>
+
+        <select name="accountId">
+            <c:forEach items="${user.accounts}" var="account">
+                <c:choose>
+                    <c:when test="${account.id eq selectedAccount.id}">
+                        <option value="${account.id}" selected="selected">${account.name}</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${account.id}">${account.name}</option>
+                    </c:otherwise>
+                </c:choose>
             </c:forEach>
-        </tbody>
-    </table>
+        </select>
+        <button type="submit" class="btn">See</button>
+    </form>
+    <c:choose>
+        <c:when test="${not empty selectedAccount}">
+            <c:choose>
+                <c:when test="${not empty selectedAccount.operations}">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>Wording</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${selectedAccount.operations}" var="operation">
+                            <tr>
+                                <td>${operation.id}</td>
+                                <td>${operation.date}</td>
+                                <td>${operation.wording}</td>
+                                <td>${operation.amount}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    <h3>No operations on account ${selectedAccount.name}</h3>
+                </c:otherwise>
+            </c:choose>
+        </c:when>
+        <c:otherwise>
+            <h3>Account not found</h3>
+        </c:otherwise>
+    </c:choose>
 </div>
 </body>
 </html>

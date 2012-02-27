@@ -14,6 +14,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Account.readUserAccounts", query = "SELECT a FROM Account a WHERE a.accountOwner = :accountOwner")
+})
 public class Account
 {
     @Id
