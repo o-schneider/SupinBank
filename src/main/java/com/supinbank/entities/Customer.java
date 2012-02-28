@@ -43,7 +43,6 @@ public class Customer extends User
     @NotNull
     private Integer phone;
 
-    @JoinColumn
     @OneToMany
     private List<Account> accounts;
 

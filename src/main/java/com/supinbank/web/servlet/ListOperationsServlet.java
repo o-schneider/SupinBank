@@ -28,7 +28,7 @@ public class ListOperationsServlet extends HttpServlet
             id = Integer.parseInt(request.getParameter("accountId"));
         } catch (Exception e)
         {
-
+            
         }
 
         Customer customer = (Customer) request.getSession().getAttribute("user");

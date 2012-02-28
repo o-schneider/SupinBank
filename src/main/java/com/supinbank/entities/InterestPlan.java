@@ -23,10 +23,6 @@ public class InterestPlan
     @Size(min = 1, max = 50)
     private String name;
 
-    @JoinColumn
-    @OneToMany
-    private List<Account> accounts;
-
     public int getId()
     {
         return id;
