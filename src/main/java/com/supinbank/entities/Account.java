@@ -14,6 +14,10 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Account.readUserAccounts", query = "SELECT a FROM Account a WHERE a.accountOwner = :accountOwner"),
+        @NamedQuery(name = "Account.readAccountByBban", query = "SELECT a FROM Account a WHERE a.bban = :bban")
+})
 public class Account
 {
     @Id
@@ -37,6 +41,8 @@ public class Account
     @JoinColumn
     @ManyToOne
     private Customer accountOwner;
+
+    private String bban;
 
     public Customer getAccountOwner()
     {
@@ -96,5 +102,15 @@ public class Account
     public void setOperations(List<Operation> operations)
     {
         this.operations = operations;
+    }
+
+    public String getBban()
+    {
+        return bban;
+    }
+
+    public void setBban(String bban)
+    {
+        this.bban = bban;
     }
 }
