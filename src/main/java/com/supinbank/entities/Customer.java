@@ -43,7 +43,7 @@ public class Customer extends User
     @NotNull
     private Integer phone;
 
-    @OneToMany
+    @OneToMany(mappedBy = "accountOwner")
     private List<Account> accounts;
 
     public List<Account> getAccounts()

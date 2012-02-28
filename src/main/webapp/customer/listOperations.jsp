@@ -55,11 +55,17 @@
     <h1>Operations</h1>
     <hr/>
 
+    <c:if test="${noAccountSelected}">
+        <div class="alert alert-info">
+            <p>Please select an account</p>
+        </div>
+    </c:if>
+
     <form method="get" class="form-inline">
         <label>Select your account </label>
 
         <select name="accountId">
-            <c:forEach items="${user.accounts}" var="account">
+            <c:forEach items="${accounts}" var="account">
                 <c:choose>
                     <c:when test="${account.id eq selectedAccount.id}">
                         <option value="${account.id}" selected="selected">${account.name}</option>

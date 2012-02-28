@@ -32,39 +32,8 @@ public class TransferService
 
     public void performInternalTransfer(Account debitAccount, Account creditAccount, BigDecimal amount, String wording)
     {
-        createDebitOperation(debitAccount, amount, wording);
-
-        Operation creditOperation = new Operation();
-        creditOperation.setAccount(debitAccount);
-        creditOperation.setDate(new Date());
-        creditOperation.setAmount(amount);
-        creditOperation.setWording(wording);
-
-        BigDecimal creditAccountAmount = creditAccount.getAmount();
-        BigDecimal newCreditAccountAmount = creditAccountAmount.add(creditOperation.getAmount());
-        creditAccount.setAmount(newCreditAccountAmount);
-        creditAccount.getOperations().add(creditOperation);
-
-        genericCrudService.create(creditOperation);
-        genericCrudService.update(creditAccount);
-    }
-
-    public void createDebitOperation(Account debitAccount, BigDecimal amount, String wording)
-    {
-        Operation debitOperation = new Operation();
-        debitOperation.setAccount(debitAccount);
-        debitOperation.setDate(new Date());
-        debitOperation.setAmount(amount.negate());
-        debitOperation.setWording(wording);
-
-        BigDecimal debitAccountAmount = debitAccount.getAmount();
-        BigDecimal newDebitAccountAmount = debitAccountAmount.add(debitOperation.getAmount());
-        debitAccount.setAmount(newDebitAccountAmount);
-        debitAccount.getOperations().add(debitOperation);
-
-        genericCrudService.create(debitOperation);
-        genericCrudService.update(debitAccount);
-
+        createTransferOperation(creditAccount, amount, wording);
+        createTransferOperation(debitAccount, amount.negate(), wording);
     }
 
     public void performExternalTransfer(Account debAccount, String creditAccountBban, BigDecimal amount, String wording) throws NamingException, JMSException, JAXBException
@@ -113,7 +82,24 @@ public class TransferService
         producer.send(message);
         cnx.close();
 
-        createDebitOperation(debAccount, amount, wording);
+        createTransferOperation(debAccount, amount.negate(), wording);
+    }
+
+    public void createTransferOperation(Account account, BigDecimal amount, String wording)
+    {
+        Operation operation = new Operation();
+        operation.setAccount(account);
+        operation.setDate(new Date());
+        operation.setAmount(amount);
+        operation.setWording(wording);
+
+        BigDecimal currentAmount = account.getAmount();
+        BigDecimal newAmount = currentAmount.add(amount);
+        account.setAmount(newAmount);
+        account.getOperations().add(operation);
+
+        genericCrudService.create(operation);
+        genericCrudService.update(account);
     }
 
     public GenericCrudService getGenericCrudService()

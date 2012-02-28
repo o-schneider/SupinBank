@@ -78,7 +78,6 @@ public class AddOperationServlet extends HttpServlet
             account.getOperations().add(operation);
 
             genericCrudService.create(operation);
-
             genericCrudService.update(account);
 
             response.sendRedirect(request.getServletContext().getContextPath() + "/admin/accounts?id=" + account.getAccountOwner().getId());
