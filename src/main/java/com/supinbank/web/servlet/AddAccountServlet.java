@@ -3,6 +3,7 @@ package com.supinbank.web.servlet;
 import com.supinbank.entities.Account;
 import com.supinbank.entities.Customer;
 import com.supinbank.entities.InterestPlan;
+import com.supinbank.services.AccountService;
 import com.supinbank.services.GenericCrudService;
 import com.supinbank.services.MailService;
 import com.supinbank.services.PasswordService;
@@ -36,6 +37,8 @@ public class AddAccountServlet extends HttpServlet
     private PasswordService passwordService;
     @Inject
     private MailService mailService;
+    @Inject
+    private AccountService accountService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
@@ -90,7 +93,7 @@ public class AddAccountServlet extends HttpServlet
 
             try
             {
-                customer.setPassword(passwordService.createHash(customer.getEmail()));
+                customer.setPassword(passwordService.createHash(password));
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -104,8 +107,7 @@ public class AddAccountServlet extends HttpServlet
             outputServlet = "/admin/accounts?id=" + customer.getId();
         }
 
-
-        genericCrudService.create(account);
+        accountService.create(account);
 
         if (customer.getAccounts() == null)
         {
@@ -147,5 +149,15 @@ public class AddAccountServlet extends HttpServlet
     public void setMailService(MailService mailService)
     {
         this.mailService = mailService;
+    }
+
+    public AccountService getAccountService()
+    {
+        return accountService;
+    }
+
+    public void setAccountService(AccountService accountService)
+    {
+        this.accountService = accountService;
     }
 }
