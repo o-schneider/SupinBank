@@ -13,6 +13,7 @@
 <body>
 <jsp:include page="/partials/navbar.jsp" />
 <div class="container">
+    <jsp:include page="/partials/generalError.jsp" />
     <h1>Add account</h1>
     <hr/>
     <fieldset>

@@ -2,6 +2,7 @@ package com.supinbank.services;
 
 import com.supinbank.entities.Account;
 import com.supinbank.entities.Operation;
+import com.supinbank.messaging.MessageSender;
 import com.supinbank.messaging.xml.BankTransfer;
 
 import javax.ejb.Stateless;
@@ -28,28 +29,16 @@ import java.util.Date;
 public class TransferService
 {
     @Inject
-    private GenericCrudService genericCrudService;
+    private OperationService operationService;
 
     public void performInternalTransfer(Account debitAccount, Account creditAccount, BigDecimal amount, String wording)
     {
-        createTransferOperation(creditAccount, amount, wording);
-        createTransferOperation(debitAccount, amount.negate(), wording);
+        operationService.createOperation(creditAccount, amount, wording);
+        operationService.createOperation(debitAccount, amount.negate(), wording);
     }
 
     public void performExternalTransfer(Account debAccount, String creditAccountBban, BigDecimal amount, String wording) throws NamingException, JMSException, JAXBException
     {
-        Context ctx = new InitialContext();
-
-        ConnectionFactory connectionFactory =
-                (ConnectionFactory) ctx.lookup("queue/externalTransfer");
-        Destination destination =
-                (Destination) ctx.lookup("jms/externalTransfer");
-        Connection cnx = connectionFactory.createConnection();
-        Session session =
-                cnx.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        MessageProducer producer = session.createProducer(destination);
-        TextMessage message = session.createTextMessage();
-
         BankTransfer bankTransfer = new BankTransfer();
         com.supinbank.messaging.xml.Account sender = new com.supinbank.messaging.xml.Account();
         com.supinbank.messaging.xml.Account recipient = new com.supinbank.messaging.xml.Account();
@@ -72,43 +61,19 @@ public class TransferService
         bankTransfer.setRecipient(recipient);
         bankTransfer.setSender(sender);
 
-        StringWriter writer = new StringWriter();
+        MessageSender msgSender = new MessageSender();
+        msgSender.sendTransferMessage(bankTransfer);
 
-        JAXBContext context = JAXBContext.newInstance(BankTransfer.class);
-        Marshaller m = context.createMarshaller();
-        m.marshal(bankTransfer, writer);
-
-        message.setText(writer.toString());
-        producer.send(message);
-        cnx.close();
-
-        createTransferOperation(debAccount, amount.negate(), wording);
+        operationService.createOperation(debAccount, amount.negate(), wording);
     }
 
-    public void createTransferOperation(Account account, BigDecimal amount, String wording)
+    public OperationService getOperationService()
     {
-        Operation operation = new Operation();
-        operation.setAccount(account);
-        operation.setDate(new Date());
-        operation.setAmount(amount);
-        operation.setWording(wording);
-
-        BigDecimal currentAmount = account.getAmount();
-        BigDecimal newAmount = currentAmount.add(amount);
-        account.setAmount(newAmount);
-        account.getOperations().add(operation);
-
-        genericCrudService.create(operation);
-        genericCrudService.update(account);
+        return operationService;
     }
 
-    public GenericCrudService getGenericCrudService()
+    public void setOperationService(OperationService operationService)
     {
-        return genericCrudService;
-    }
-
-    public void setGenericCrudService(GenericCrudService genericCrudService)
-    {
-        this.genericCrudService = genericCrudService;
+        this.operationService = operationService;
     }
 }

@@ -16,11 +16,7 @@
 <body>
 <jsp:include page="/partials/navbar.jsp" />
 <div class="container">
-    <c:if test="${loginFailed}">
-        <div id="loginErrorMsg" class="alert alert-error">
-            <p>${loginFailedMsg}</p>
-        </div>
-    </c:if>
+    <jsp:include page="/partials/generalError.jsp" />
 
     <h1>Welcome!</h1>
     <hr/>
