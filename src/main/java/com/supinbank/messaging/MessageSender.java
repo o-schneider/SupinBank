@@ -20,8 +20,8 @@ import java.io.StringWriter;
  */
 public class MessageSender
 {
-    private static final String CONNECTION_FACTORY = "queue/externalTransfer";
-    private static final String DESTINATION = "jms/externalTransfer";
+    private final String CONNECTION_FACTORY = "queue/externalTransfer";
+    private final String DESTINATION = "jms/externalTransfer";
 
     public void sendTransferMessage(BankTransfer transfer)
     {

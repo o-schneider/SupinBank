@@ -21,7 +21,7 @@ public class PasswordService
 
     public String createHash(String password) throws Exception
     {
-        MessageDigest md = null;
+        MessageDigest md;
         try
         {
             md = MessageDigest.getInstance("SHA");
