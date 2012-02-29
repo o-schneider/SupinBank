@@ -14,42 +14,7 @@
     <title>SupinBank - Customer</title>
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
-            <ul class="nav">
-                <li class="active">
-                    <a href="${pageContext.servletContext.contextPath}/customer/accounts">My accounts</a>
-                </li>
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/customer/operations">My operations</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown">
-                        Perform a transfer
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="${pageContext.servletContext.contextPath}/customer/transfer/internal">Within your accounts</a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.servletContext.contextPath}/customer/transfer/external">To an external account</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav pull-right">
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<jsp:include page="/partials/navbar.jsp" />
 <div class="container">
     <h1>${user.firstName} ${user.lastName} accounts</h1>
     <hr/>
