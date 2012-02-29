@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -54,10 +55,10 @@ public class AccountService
     {
         em.persist(account);
 
-        String accountNumber = String.format("%11d", account.getId());
+        String accountNumber = String.format("%011d", account.getId());
         String bbanWithoutKey = bankCode + branchCode + accountNumber;
-        long keyConcatNum = Long.parseLong(bbanWithoutKey);
-        long key = (97 - (keyConcatNum * 100 % 97));
+        BigInteger keyConcatNum = new BigInteger(bbanWithoutKey);
+        BigInteger key = (new BigInteger("97").subtract(keyConcatNum.multiply(new BigInteger("100")).mod(new BigInteger("97"))));
         String keyString = String.format("%02d", key);
         String bban = bbanWithoutKey + key;
 

@@ -42,8 +42,7 @@ public class LoginServlet extends HttpServlet
             User user = authenticationService.authenticate(email, hashedPassword);
             if (user == null)
             {
-                request.setAttribute("loginFailed", true);
-                request.setAttribute("loginFailedMsg", "Wrong username or password. Please try again");
+                request.setAttribute("generalError", "Wrong username or password. Please try again");
                 doGet(request, response);
             } else
             {
@@ -60,8 +59,7 @@ public class LoginServlet extends HttpServlet
             }
         } catch (Exception e)
         {
-            request.setAttribute("loginFailed", true);
-            request.setAttribute("loginFailedMsg", "An error occurred. Please contact the support");
+            request.setAttribute("generalError", "An error occurred. Please contact the support");
             doGet(request, response);
         }
     }
@@ -80,5 +78,15 @@ public class LoginServlet extends HttpServlet
     public void setAuthenticationService(AuthenticationService authenticationService)
     {
         this.authenticationService = authenticationService;
+    }
+
+    public PasswordService getPasswordService()
+    {
+        return passwordService;
+    }
+
+    public void setPasswordService(PasswordService passwordService)
+    {
+        this.passwordService = passwordService;
     }
 }

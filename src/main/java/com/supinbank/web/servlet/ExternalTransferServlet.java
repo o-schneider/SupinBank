@@ -29,8 +29,8 @@ import java.util.List;
 @WebServlet(name = "ExternalTransferServlet", urlPatterns = {"/customer/transfer/external"})
 public class ExternalTransferServlet extends HttpServlet
 {
-    private static final String bankCode = "76267";
-    private static final String branchCode = "00000";
+    private final String bankCode = "76267";
+    private final String branchCode = "00000";
 
     @Inject
     private AccountService accountService;
@@ -56,7 +56,6 @@ public class ExternalTransferServlet extends HttpServlet
         String wording = request.getParameter("wording");
 
         String bban = bankCode + branchCode + accountNumber + key;
-
 
         Operation testOperation = new Operation();
 
@@ -103,21 +102,14 @@ public class ExternalTransferServlet extends HttpServlet
                 }
             } else
             {
-                try
-                {
-                    transferService.performExternalTransfer(debitAccount, bban, amountNb, wording);
-                    response.sendRedirect(getServletContext().getContextPath() + "/customer/accounts");
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                transferService.performExternalTransfer(debitAccount, bban, amountNb, wording);
+                response.sendRedirect(getServletContext().getContextPath() + "/customer/accounts");
             }
         } else
         {
             request.setAttribute("creditAccountError", "Missing information in bban");
             doGet(request, response);
         }
-
     }
 
 

@@ -4,6 +4,7 @@ import com.supinbank.entities.Account;
 import com.supinbank.entities.Customer;
 import com.supinbank.entities.Operation;
 import com.supinbank.services.GenericCrudService;
+import com.supinbank.services.OperationService;
 import com.supinbank.web.utils.ValidationUtil;
 
 import javax.inject.Inject;
@@ -34,6 +35,8 @@ public class AddOperationServlet extends HttpServlet
 {
     @Inject
     private GenericCrudService genericCrudService;
+    @Inject
+    private OperationService operationService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
@@ -47,17 +50,29 @@ public class AddOperationServlet extends HttpServlet
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Account account = genericCrudService.read(Account.class, id);
-
-        Operation operation = new Operation();
-        operation.setWording(request.getParameter("wording"));
-
-        boolean validAmount = true;
+        Account account;
         try
         {
-            operation.setAmount(new BigDecimal(request.getParameter("amount")));
-            validAmount = ValidationUtil.validate(operation, "amount", request);
+            account = genericCrudService.read(Account.class, Integer.parseInt(request.getParameter("id")));
+        } catch (Exception e)
+        {
+            request.setAttribute("generalError", "An error occurred. Please try again. If the problem persists, contact the support");
+            doGet(request, response);
+            return;
+        }
+
+        String wording = request.getParameter("wording");
+
+        Operation testOperation = new Operation();
+        testOperation.setWording(wording);
+
+        boolean validAmount;
+        BigDecimal amountNb = BigDecimal.ZERO;
+        try
+        {
+            amountNb = new BigDecimal(request.getParameter("amount"));
+            testOperation.setAmount(amountNb);
+            validAmount = ValidationUtil.validate(testOperation, "amount", request);
         } catch (NumberFormatException e)
         {
             validAmount = false;
@@ -66,26 +81,17 @@ public class AddOperationServlet extends HttpServlet
             request.setAttribute("amountError", errors);
         }
 
-        boolean validWording = ValidationUtil.validate(operation, "wording", request);
+        boolean validWording = ValidationUtil.validate(testOperation, "wording", request);
 
         if (validAmount && validWording)
         {
-            operation.setAccount(account);
-            operation.setDate(new Date());
-            BigDecimal currentAmount = account.getAmount();
-            currentAmount = currentAmount.add(operation.getAmount());
-            account.setAmount(currentAmount);
-            account.getOperations().add(operation);
-
-            genericCrudService.create(operation);
-
-            genericCrudService.update(account);
+            operationService.createOperation(account, amountNb, wording);
 
             response.sendRedirect(request.getServletContext().getContextPath() + "/admin/accounts?id=" + account.getAccountOwner().getId());
         } else
         {
             request.setAttribute("account", account);
-            request.setAttribute("operation", operation);
+            request.setAttribute("operation", testOperation);
             doGet(request, response);
         }
     }
@@ -99,5 +105,15 @@ public class AddOperationServlet extends HttpServlet
     public void setGenericCrudService(GenericCrudService genericCrudService)
     {
         this.genericCrudService = genericCrudService;
+    }
+
+    public OperationService getOperationService()
+    {
+        return operationService;
+    }
+
+    public void setOperationService(OperationService operationService)
+    {
+        this.operationService = operationService;
     }
 }

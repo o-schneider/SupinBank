@@ -2,13 +2,18 @@ package com.supinbank.web.servlet;
 
 import com.supinbank.entities.Account;
 import com.supinbank.entities.Customer;
+import com.supinbank.services.AccountService;
+import com.supinbank.services.GenericCrudService;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +25,9 @@ import java.io.IOException;
 @WebServlet(name = "ListOperationsServlet", urlPatterns = "/customer/operations")
 public class ListOperationsServlet extends HttpServlet
 {
+    @Inject
+    private AccountService accountService;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         int id = 0;
@@ -28,12 +36,13 @@ public class ListOperationsServlet extends HttpServlet
             id = Integer.parseInt(request.getParameter("accountId"));
         } catch (Exception e)
         {
-            
+            request.setAttribute("noAccountSelected", true);
         }
 
         Customer customer = (Customer) request.getSession().getAttribute("user");
+        List<Account> accounts = accountService.readUserAccounts(customer);
 
-        for (Account account : customer.getAccounts())
+        for (Account account : accounts)
         {
             if (account.getId() == id)
             {
@@ -41,7 +50,18 @@ public class ListOperationsServlet extends HttpServlet
             }
         }
 
+        request.setAttribute("accounts", accounts);
         request.getRequestDispatcher(
                 "/customer/listOperations.jsp").forward(request, response);
+    }
+
+    public AccountService getAccountService()
+    {
+        return accountService;
+    }
+
+    public void setAccountService(AccountService accountService)
+    {
+        this.accountService = accountService;
     }
 }

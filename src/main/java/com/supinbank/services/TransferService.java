@@ -2,6 +2,7 @@ package com.supinbank.services;
 
 import com.supinbank.entities.Account;
 import com.supinbank.entities.Operation;
+import com.supinbank.messaging.MessageSender;
 import com.supinbank.messaging.xml.BankTransfer;
 
 import javax.ejb.Stateless;
@@ -28,59 +29,16 @@ import java.util.Date;
 public class TransferService
 {
     @Inject
-    private GenericCrudService genericCrudService;
+    private OperationService operationService;
 
     public void performInternalTransfer(Account debitAccount, Account creditAccount, BigDecimal amount, String wording)
     {
-        createDebitOperation(debitAccount, amount, wording);
-
-        Operation creditOperation = new Operation();
-        creditOperation.setAccount(debitAccount);
-        creditOperation.setDate(new Date());
-        creditOperation.setAmount(amount);
-        creditOperation.setWording(wording);
-
-        BigDecimal creditAccountAmount = creditAccount.getAmount();
-        BigDecimal newCreditAccountAmount = creditAccountAmount.add(creditOperation.getAmount());
-        creditAccount.setAmount(newCreditAccountAmount);
-        creditAccount.getOperations().add(creditOperation);
-
-        genericCrudService.create(creditOperation);
-        genericCrudService.update(creditAccount);
+        operationService.createOperation(creditAccount, amount, wording);
+        operationService.createOperation(debitAccount, amount.negate(), wording);
     }
 
-    public void createDebitOperation(Account debitAccount, BigDecimal amount, String wording)
+    public void performExternalTransfer(Account debAccount, String creditAccountBban, BigDecimal amount, String wording)
     {
-        Operation debitOperation = new Operation();
-        debitOperation.setAccount(debitAccount);
-        debitOperation.setDate(new Date());
-        debitOperation.setAmount(amount.negate());
-        debitOperation.setWording(wording);
-
-        BigDecimal debitAccountAmount = debitAccount.getAmount();
-        BigDecimal newDebitAccountAmount = debitAccountAmount.add(debitOperation.getAmount());
-        debitAccount.setAmount(newDebitAccountAmount);
-        debitAccount.getOperations().add(debitOperation);
-
-        genericCrudService.create(debitOperation);
-        genericCrudService.update(debitAccount);
-
-    }
-
-    public void performExternalTransfer(Account debAccount, String creditAccountBban, BigDecimal amount, String wording) throws NamingException, JMSException, JAXBException
-    {
-        Context ctx = new InitialContext();
-
-        ConnectionFactory connectionFactory =
-                (ConnectionFactory) ctx.lookup("queue/externalTransfer");
-        Destination destination =
-                (Destination) ctx.lookup("jms/externalTransfer");
-        Connection cnx = connectionFactory.createConnection();
-        Session session =
-                cnx.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        MessageProducer producer = session.createProducer(destination);
-        TextMessage message = session.createTextMessage();
-
         BankTransfer bankTransfer = new BankTransfer();
         com.supinbank.messaging.xml.Account sender = new com.supinbank.messaging.xml.Account();
         com.supinbank.messaging.xml.Account recipient = new com.supinbank.messaging.xml.Account();
@@ -103,26 +61,19 @@ public class TransferService
         bankTransfer.setRecipient(recipient);
         bankTransfer.setSender(sender);
 
-        StringWriter writer = new StringWriter();
+        MessageSender msgSender = new MessageSender();
+        msgSender.sendTransferMessage(bankTransfer);
 
-        JAXBContext context = JAXBContext.newInstance(BankTransfer.class);
-        Marshaller m = context.createMarshaller();
-        m.marshal(bankTransfer, writer);
-
-        message.setText(writer.toString());
-        producer.send(message);
-        cnx.close();
-
-        createDebitOperation(debAccount, amount, wording);
+        operationService.createOperation(debAccount, amount.negate(), wording);
     }
 
-    public GenericCrudService getGenericCrudService()
+    public OperationService getOperationService()
     {
-        return genericCrudService;
+        return operationService;
     }
 
-    public void setGenericCrudService(GenericCrudService genericCrudService)
+    public void setOperationService(OperationService operationService)
     {
-        this.genericCrudService = genericCrudService;
+        this.operationService = operationService;
     }
 }

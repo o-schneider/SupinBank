@@ -11,27 +11,9 @@
     <title>SupinBank - Admin</title>
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
-            <ul class="nav">
-                <li class="active">
-                    <a href="${pageContext.servletContext.contextPath}/admin/customers">List customers</a>
-                </li>
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/admin/customers/new">Add customer</a>
-                </li>
-            </ul>
-
-            <ul class="nav pull-right">
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<jsp:include page="/partials/navbar.jsp">
+    <jsp:param name="currentPage" value="/admin/customers"/>
+</jsp:include>
 <div class="container">
     <h1>Customer list</h1>
     <hr/>
@@ -53,7 +35,9 @@
                     <tr>
                         <td>${customer.firstName} ${customer.lastName}</td>
                         <td>${customer.email}</td>
-                        <td><a href="${pageContext.servletContext.contextPath}/admin/accounts?id=${customer.id}">Details</a></td>
+                        <td>
+                            <a href="${pageContext.servletContext.contextPath}/admin/accounts?id=${customer.id}">Details</a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

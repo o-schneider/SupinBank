@@ -59,6 +59,7 @@ public class AddAccountServlet extends HttpServlet
 
         if (customer == null)
         {
+            request.setAttribute("generalError", "An error occured. Please try again. If the problem persists, contact the support");
             doGet(request, response);
             return;
         }
@@ -73,7 +74,6 @@ public class AddAccountServlet extends HttpServlet
         if (!ValidationUtil.validate(account, "name", request))
         {
             request.setAttribute("customer", customer);
-            request.setAttribute("[FLASH]customer", customer);
             request.setAttribute("account", account);
             doGet(request, response);
             return;
@@ -81,15 +81,15 @@ public class AddAccountServlet extends HttpServlet
 
         account.setInterestPlan(plan);
         account.setAccountOwner(customer);
-        account.setAmount(new BigDecimal(0));
+        account.setAmount(BigDecimal.ZERO);
 
-        Random rand = new Random(System.currentTimeMillis());
 
         String outputServlet;
 
         if (genericCrudService.read(Customer.class, customer.getId()) == null)
         {
-            String password = Long.toString(rand.nextLong() + rand.nextLong());
+            Random rand = new Random(System.currentTimeMillis());
+            String password = Long.toString(rand.nextInt() + rand.nextInt());
 
             try
             {

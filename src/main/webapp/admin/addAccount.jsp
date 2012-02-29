@@ -11,48 +11,27 @@
     <title>SupinBank - Admin</title>
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
-            <ul class="nav">
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/admin/customers">List customers</a>
-                </li>
-                <li class="active">
-                    <a href="${pageContext.servletContext.contextPath}/admin/customers/new">Add customer</a>
-                </li>
-            </ul>
-
-            <ul class="nav pull-right">
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<jsp:include page="/partials/navbar.jsp"/>
 <div class="container">
+    <jsp:include page="/partials/generalError.jsp"/>
     <h1>Add account</h1>
     <hr/>
     <fieldset>
         <legend>Account for ${customer.firstName} ${customer.lastName}</legend>
 
         <form method="post" class="form-horizontal">
-            <div class="control-group">
+            <div class="control-group ${not empty nameError ? "error":""}">
                 <label class="control-label" for="name">Name</label>
 
                 <div class="controls">
                     <input type="text" name="name" class="input-xlarge" id="name" value="${account.name}">
-                    <c:if test="${not empty nameError}">
-                        <div class="help-block alert alert-error">
-                            <ul>
-                                <c:forEach items="${nameError}" var="error">
-                                    <li>${error}</li>
-                                </c:forEach>
-                            </ul>
-                        </div>
-                    </c:if>
+
+                    <div class="help-inline">
+                        <c:forEach items="${nameError}" var="error" varStatus="loop">
+                            <c:if test="${loop.index gt 0}">,</c:if>
+                            ${error}
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
             <div class="control-group">

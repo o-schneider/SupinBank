@@ -35,7 +35,7 @@ public class Account
 
     private BigDecimal amount;
 
-    @OneToMany
+    @OneToMany(mappedBy = "account")
     private List<Operation> operations;
 
     @JoinColumn

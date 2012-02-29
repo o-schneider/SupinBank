@@ -2,7 +2,9 @@ package com.supinbank.web.servlet;
 
 import com.supinbank.entities.Account;
 import com.supinbank.entities.Operation;
+import com.supinbank.services.AccountService;
 import com.supinbank.services.GenericCrudService;
+import com.supinbank.services.TransferService;
 import com.supinbank.web.utils.ValidationUtil;
 
 import javax.inject.Inject;
@@ -29,6 +31,8 @@ public class InternalTransferServlet extends HttpServlet
 {
     @Inject
     private GenericCrudService genericCrudService;
+    @Inject
+    private TransferService transferService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
@@ -47,7 +51,7 @@ public class InternalTransferServlet extends HttpServlet
         Account debitAccount = genericCrudService.read(Account.class, debitAccountId);
         Account creditAccount = genericCrudService.read(Account.class, creditAccountId);
 
-        Operation creditOperation = new Operation();
+        Operation testOperation = new Operation();
 
         boolean validAccounts = true;
 
@@ -58,10 +62,12 @@ public class InternalTransferServlet extends HttpServlet
         }
 
         boolean validAmount;
+        BigDecimal amountNb = new BigDecimal(0);
         try
         {
-            creditOperation.setAmount(new BigDecimal(amount));
-            validAmount = ValidationUtil.validate(creditOperation, "amount", request);
+            testOperation.setAmount(new BigDecimal(amount));
+            validAmount = ValidationUtil.validate(testOperation, "amount", request);
+            amountNb = testOperation.getAmount();
         } catch (NumberFormatException e)
         {
             validAmount = false;
@@ -70,36 +76,12 @@ public class InternalTransferServlet extends HttpServlet
             request.setAttribute("amountError", errors);
         }
 
-        creditOperation.setWording(request.getParameter("wording"));
-        boolean validWording = ValidationUtil.validate(creditOperation, "wording", request);
+        testOperation.setWording(request.getParameter("wording"));
+        boolean validWording = ValidationUtil.validate(testOperation, "wording", request);
 
         if (validAmount && validWording && validAccounts)
         {
-            creditOperation.setAccount(creditAccount);
-            creditOperation.setDate(new Date());
-
-            BigDecimal currentAmount = creditAccount.getAmount();
-            BigDecimal newAmount = currentAmount.add(creditOperation.getAmount());
-            creditAccount.setAmount(newAmount);
-            creditAccount.getOperations().add(creditOperation);
-
-            genericCrudService.create(creditOperation);
-            genericCrudService.update(creditAccount);
-
-            Operation debitOperation = new Operation();
-            debitOperation.setAccount(debitAccount);
-            debitOperation.setDate(new Date());
-            debitOperation.setAmount(new BigDecimal("-" + amount));
-            debitOperation.setWording(wording);
-
-            currentAmount = debitAccount.getAmount();
-            newAmount = currentAmount.add(debitOperation.getAmount());
-            debitAccount.setAmount(newAmount);
-            debitAccount.getOperations().add(debitOperation);
-
-            genericCrudService.create(debitOperation);
-            genericCrudService.update(debitAccount);
-
+            transferService.performInternalTransfer(debitAccount, creditAccount, amountNb, wording);
             response.sendRedirect(getServletContext().getContextPath() + "/customer/accounts");
         } else
         {

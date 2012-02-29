@@ -16,44 +16,8 @@
     <title>SupinBank - Customer</title>
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
-            <ul class="nav">
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/customer/accounts">My accounts</a>
-                </li>
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/customer/operations">My operations</a>
-                </li>
-                <li class="dropdown active">
-                    <a href="#"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown">
-                        Perform a transfer
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="${pageContext.servletContext.contextPath}/customer/transfer/internal">Within your
-                                accounts</a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.servletContext.contextPath}/customer/transfer/external">To an
-                                external account</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav pull-right">
-                <li>
-                    <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<jsp:include page="/partials/navbar.jsp"/>
+
 <div class="container">
     <h1>Perform a transfer</h1>
     <hr/>
@@ -77,51 +41,46 @@
                 </select>
             </div>
         </div>
-        <div class="control-group">
+        <div class="control-group ${not empty creditAccountError ? "error":""}">
             <label class="control-label">Credit account BBAN</label>
 
             <div class="controls">
                 <input type="text" class="input-medium" name="bankCode">
-                <input type="text" class="input-medium" name="branchCode" >
+                <input type="text" class="input-medium" name="branchCode">
                 <input type="text" class="input-xlarge" name="accountNumber">
                 <input type="text" class="input-mini" name="key" size="2">
-                <c:if test="${not empty creditAccountError}">
-                    <div class="help-block alert alert-error">
-                            ${creditAccountError}
-                    </div>
-                </c:if>
+
+                <div class="help-block">
+                    ${creditAccountError}
+                </div>
             </div>
         </div>
-        <div class="control-group">
+        <div class="control-group ${not empty amountError ? "error":""}">
             <label class="control-label" for="debitAccount">Amount</label>
 
             <div class="controls">
                 <input type="text" name="amount" class="input-xlarge" id="amount" value="${amount}">
-                <c:if test="${not empty amountError}">
-                    <div class="help-block alert alert-error">
-                        <ul>
-                            <c:forEach items="${amountError}" var="error">
-                                <li>${error}</li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                </c:if>
+
+                <div class="help-inline">
+                    <c:forEach items="${amountError}" var="error" varStatus="loop">
+                        <c:if test="${loop.index gt 0}">,</c:if>
+                        ${error}
+                    </c:forEach>
+                </div>
             </div>
         </div>
-        <div class="control-group">
+        <div class="control-group ${not empty wordingError ? "error":""}">
             <label class="control-label" for="wording">Wording</label>
 
             <div class="controls">
                 <input type="text" name="wording" class="input-xlarge" id="wording" value="${wording}">
-                <c:if test="${not empty wordingError}">
-                    <div class="help-block alert alert-error">
-                        <ul>
-                            <c:forEach items="${wordingError}" var="error">
-                                <li>${error}</li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                </c:if>
+
+                <div class="help-inline">
+                    <c:forEach items="${wordingError}" var="error" varStatus="loop">
+                        <c:if test="${loop.index gt 0}">,</c:if>
+                        ${error}
+                    </c:forEach>
+                </div>
             </div>
         </div>
         <div class="form-actions">
