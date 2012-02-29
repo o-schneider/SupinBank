@@ -49,6 +49,10 @@
                     </c:if>
                     <ul class="nav pull-right">
                         <li>
+                            <a>${user.email}</a>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li>
                             <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>
                         </li>
                     </ul>

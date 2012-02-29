@@ -21,13 +21,7 @@
     <h1>Operations</h1>
     <hr/>
 
-    <c:if test="${noAccountSelected}">
-        <div class="alert alert-info">
-            <p>Please select an account</p>
-        </div>
-    </c:if>
-
-    <form method="get" class="form-inline">
+    <form method="get" class="form-inline ">
         <label>Select your account </label>
 
         <select name="accountId">
@@ -43,7 +37,11 @@
             </c:forEach>
         </select>
         <button type="submit" class="btn">See</button>
-    </form>
+        <c:if test="${noAccountSelected}">
+            <div class="help-inline alert alert-info">
+                Please select an account
+            </div>
+        </c:if>
     <c:choose>
         <c:when test="${not empty selectedAccount}">
             <c:choose>
@@ -75,7 +73,7 @@
             </c:choose>
         </c:when>
         <c:otherwise>
-            <h3>Account not found</h3>
+            <h3>No account found</h3>
         </c:otherwise>
     </c:choose>
 </div>
