@@ -17,33 +17,12 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 @WebFilter(filterName = "CustomerAuthenticationFilter", urlPatterns = "/customer/*")
-public class CustomerAuthenticationFilter implements Filter
+public class CustomerAuthenticationFilter extends AuthenticationFilter
 {
-    private AuthenticationService authenticationService;
 
-    public void destroy()
+    @Override
+    protected boolean isUserAuthorized(Object user)
     {
+        return (user instanceof Customer);
     }
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException
-    {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-        Object user = httpRequest.getSession().getAttribute("user");
-
-        if (user == null || !(user instanceof Customer))
-        {
-            httpResponse.sendRedirect(request.getServletContext().getContextPath() + "/");
-        } else
-        {
-            chain.doFilter(request, response);
-        }
-    }
-
-    public void init(FilterConfig config) throws ServletException
-    {
-
-    }
-
 }

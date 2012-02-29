@@ -14,7 +14,7 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand" href="#">SupinBank</a>
+            <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
         </div>
     </div>
 </div>

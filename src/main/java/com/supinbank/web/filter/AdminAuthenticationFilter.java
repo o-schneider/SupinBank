@@ -16,31 +16,11 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 @WebFilter(filterName = "AdminAuthenticationFilter", urlPatterns = "/admin/*")
-public class AdminAuthenticationFilter implements Filter
+public class AdminAuthenticationFilter extends AuthenticationFilter
 {
-    public void destroy()
+    @Override
+    protected boolean isUserAuthorized(Object user)
     {
+        return (user instanceof BankAdvisor);
     }
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException
-    {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-        Object user = httpRequest.getSession().getAttribute("user");
-
-        if (user == null || !(user instanceof BankAdvisor))
-        {
-            httpResponse.sendRedirect(request.getServletContext().getContextPath() + "/");
-        } else
-        {
-            chain.doFilter(request, response);
-        }
-    }
-
-    public void init(FilterConfig config) throws ServletException
-    {
-
-    }
-
 }
