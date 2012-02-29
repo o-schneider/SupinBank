@@ -63,16 +63,16 @@ public class AddOperationServlet extends HttpServlet
 
         String wording = request.getParameter("wording");
 
-        Operation operation = new Operation();
-        operation.setWording(wording);
+        Operation testOperation = new Operation();
+        testOperation.setWording(wording);
 
         boolean validAmount;
         BigDecimal amountNb = BigDecimal.ZERO;
         try
         {
             amountNb = new BigDecimal(request.getParameter("amount"));
-            operation.setAmount(amountNb);
-            validAmount = ValidationUtil.validate(operation, "amount", request);
+            testOperation.setAmount(amountNb);
+            validAmount = ValidationUtil.validate(testOperation, "amount", request);
         } catch (NumberFormatException e)
         {
             validAmount = false;
@@ -81,7 +81,7 @@ public class AddOperationServlet extends HttpServlet
             request.setAttribute("amountError", errors);
         }
 
-        boolean validWording = ValidationUtil.validate(operation, "wording", request);
+        boolean validWording = ValidationUtil.validate(testOperation, "wording", request);
 
         if (validAmount && validWording)
         {
@@ -91,7 +91,7 @@ public class AddOperationServlet extends HttpServlet
         } else
         {
             request.setAttribute("account", account);
-            request.setAttribute("operation", operation);
+            request.setAttribute("operation", testOperation);
             doGet(request, response);
         }
     }

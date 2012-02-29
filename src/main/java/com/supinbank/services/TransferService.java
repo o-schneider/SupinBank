@@ -37,7 +37,7 @@ public class TransferService
         operationService.createOperation(debitAccount, amount.negate(), wording);
     }
 
-    public void performExternalTransfer(Account debAccount, String creditAccountBban, BigDecimal amount, String wording) throws NamingException, JMSException, JAXBException
+    public void performExternalTransfer(Account debAccount, String creditAccountBban, BigDecimal amount, String wording)
     {
         BankTransfer bankTransfer = new BankTransfer();
         com.supinbank.messaging.xml.Account sender = new com.supinbank.messaging.xml.Account();

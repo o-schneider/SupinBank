@@ -35,8 +35,6 @@ public class AddCustomerServlet extends HttpServlet
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        boolean valid = true;
-
         Customer customer = new Customer();
 
         customer.setFirstName(request.getParameter("firstname"));
@@ -77,9 +75,9 @@ public class AddCustomerServlet extends HttpServlet
         boolean validAddress = ValidationUtil.validate(customer, "address", request);
         boolean validCity = ValidationUtil.validate(customer, "city", request);
 
-        valid = valid && validAddress && validCity && validEmail && validFirstname && validLastname && validPhone && validZipCode;
+        boolean validInput = validAddress && validCity && validEmail && validFirstname && validLastname && validPhone && validZipCode;
 
-        if (valid)
+        if (validInput)
         {
             request.setAttribute("[FLASH]customer", customer);
             response.sendRedirect(getServletContext().getContextPath() + "/admin/accounts/new");
