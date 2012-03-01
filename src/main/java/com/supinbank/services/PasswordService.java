@@ -13,7 +13,7 @@ import java.util.Formatter;
  * User: oli
  * Date: 2/22/12
  * Time: 8:17 PM
- * To change this template use File | Settings | File Templates.
+ * Service to produce hashed passwords.
  */
 @Stateless
 public class PasswordService

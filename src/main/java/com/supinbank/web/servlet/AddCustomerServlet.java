@@ -22,7 +22,7 @@ import java.util.Set;
  * User: oli
  * Date: 2/25/12
  * Time: 3:12 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /admin/addCustomer.jsp page.
  */
 @WebServlet(name = "AddCustomerServlet", urlPatterns = {"/admin/customers/new"})
 public class AddCustomerServlet extends HttpServlet

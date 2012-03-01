@@ -26,7 +26,7 @@ import java.util.Random;
  * User: oli
  * Date: 2/25/12
  * Time: 5:40 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /admin/addAccount.jsp page.
  */
 @WebServlet(name = "AddAccountServlet", urlPatterns = {"/admin/accounts/new"})
 public class AddAccountServlet extends HttpServlet

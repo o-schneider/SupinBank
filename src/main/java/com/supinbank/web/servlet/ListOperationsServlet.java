@@ -20,7 +20,7 @@ import java.util.List;
  * User: oli
  * Date: 2/26/12
  * Time: 5:29 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /customer/listOperations.jsp page.
  */
 @WebServlet(name = "ListOperationsServlet", urlPatterns = "/customer/operations")
 public class ListOperationsServlet extends HttpServlet

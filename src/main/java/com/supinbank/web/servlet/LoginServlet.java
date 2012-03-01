@@ -21,7 +21,7 @@ import java.util.logging.LoggingMXBean;
  * User: oli
  * Date: 2/21/12
  * Time: 10:43 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /index.jsp page.
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/home"})
 public class LoginServlet extends HttpServlet

@@ -16,12 +16,15 @@ import java.util.Set;
  * User: oli
  * Date: 2/26/12
  * Time: 2:52 PM
- * To change this template use File | Settings | File Templates.
+ * Util to factorize validation code.
  */
 public class ValidationUtil
 {
     private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
+    /*
+     * Validate a field from a bean with BeanValidation and put the errors in the request if there are some
+     */
     public static <T> boolean validate(T objectToValidate, String property, HttpServletRequest request)
     {
         boolean valid = true;

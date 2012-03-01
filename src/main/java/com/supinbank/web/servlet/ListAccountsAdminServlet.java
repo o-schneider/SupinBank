@@ -16,7 +16,7 @@ import java.io.IOException;
  * User: oli
  * Date: 2/25/12
  * Time: 10:42 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /admin/listAccounts.jsp page.
  */
 @WebServlet(name = "ListAccountsAdminServlet", urlPatterns = "/admin/accounts")
 public class ListAccountsAdminServlet extends HttpServlet

@@ -16,7 +16,8 @@ import java.io.StringWriter;
  * User: oli
  * Date: 2/29/12
  * Time: 2:44 PM
- * To change this template use File | Settings | File Templates.
+ * Helper to send JMS text message to remote queue for the external money transfers.
+ * It generates an xml formatted message from a BankTransfer object
  */
 public class MessageSender
 {

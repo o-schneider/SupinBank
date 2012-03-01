@@ -13,7 +13,7 @@ import java.util.Date;
  * User: oli
  * Date: 2/29/12
  * Time: 2:33 PM
- * To change this template use File | Settings | File Templates.
+ * Service to handle basic operation on accounts.
  */
 @Stateless
 public class OperationService

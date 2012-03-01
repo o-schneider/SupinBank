@@ -9,7 +9,7 @@ import java.io.IOException;
  * User: oli
  * Date: 3/1/12
  * Time: 3:44 PM
- * To change this template use File | Settings | File Templates.
+ * Filter to change the servlet encoding and avoid encoding problems with non-ascii characters.
  */
 @WebFilter(filterName = "EncodingFilter", urlPatterns = "/*")
 public class EncodingFilter implements Filter

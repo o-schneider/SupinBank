@@ -23,7 +23,7 @@ import java.util.Date;
  * User: oli
  * Date: 2/28/12
  * Time: 2:50 PM
- * To change this template use File | Settings | File Templates.
+ * Service to handle the money transfer from on account to a different account.
  */
 @Stateless
 public class TransferService

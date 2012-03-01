@@ -17,7 +17,7 @@ import java.util.List;
  * User: oli
  * Date: 2/24/12
  * Time: 9:33 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /admin/listCustomers.jsp page
  */
 @WebServlet(name = "ListCustomersServlet", urlPatterns = {"/admin/customers"})
 public class ListCustomersServlet extends HttpServlet

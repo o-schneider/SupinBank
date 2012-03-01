@@ -19,7 +19,7 @@ import java.util.concurrent.Future;
  * User: oli
  * Date: 2/25/12
  * Time: 9:33 PM
- * To change this template use File | Settings | File Templates.
+ * Service to send mails to new customers.
  */
 @Stateless
 public class MailService
@@ -46,12 +46,14 @@ public class MailService
 
 
         Session session = Session.getDefaultInstance(props,
-            new javax.mail.Authenticator() {
+                new javax.mail.Authenticator()
+                {
 
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(USERNAME, PASSWORD);
-                }
-            });
+                    protected PasswordAuthentication getPasswordAuthentication()
+                    {
+                        return new PasswordAuthentication(USERNAME, PASSWORD);
+                    }
+                });
 
         try
         {
@@ -62,11 +64,11 @@ public class MailService
 
             StringBuilder content = new StringBuilder();
 
-            content.append("Dear "+customer.getFirstName()+" "+customer.getLastName()+" \n\n");
+            content.append("Dear " + customer.getFirstName() + " " + customer.getLastName() + " \n\n");
             content.append("Your account to SupinBank has been created!\n");
             content.append("===========================================\n");
-            content.append(" Username : "+customer.getEmail()+"\n");
-            content.append(" Password : "+clearPassword+"\n");
+            content.append(" Username : " + customer.getEmail() + "\n");
+            content.append(" Password : " + clearPassword + "\n");
             content.append("===========================================\n");
             content.append("How to log in to it? Just visit www.supinbank.com! \n");
             content.append("See you soon!\n\n");
@@ -74,9 +76,10 @@ public class MailService
 
             System.out.println(content.toString());
 
-            msg.setSubject("Your new SupinBank account");
+            msg.setHeader("Content-Type", "text/plain; charset=UTF-8");
+            msg.setSubject("Your new SupinBank account", "UTF-8");
             msg.setSentDate(new Date());
-            msg.setText(content.toString());
+            msg.setText(content.toString(), "UTF-8");
             Transport.send(msg);
         } catch (MessagingException mex)
         {

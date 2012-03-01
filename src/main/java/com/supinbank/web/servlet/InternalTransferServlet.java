@@ -24,7 +24,7 @@ import java.util.List;
  * User: oli
  * Date: 2/27/12
  * Time: 9:15 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /customer/internalTransfer.jsp page
  */
 @WebServlet(name = "InternalTransferServlet", urlPatterns = {"/customer/transfer/internal"})
 public class InternalTransferServlet extends HttpServlet

@@ -14,7 +14,7 @@ import java.util.Map;
  * User: oli
  * Date: 2/25/12
  * Time: 7:03 PM
- * To change this template use File | Settings | File Templates.
+ * Filter that implements a flash scope function. It puts tagged values in session for one request time
  */
 @WebFilter(filterName = "FlashFilter", urlPatterns = "/*")
 public class FlashFilter implements Filter
@@ -35,13 +35,16 @@ public class FlashFilter implements Filter
             HttpSession session = httpRequest.getSession(false);
             if(session != null)
             {
+                //get flash object map
                 Map<String, Object> flashMap = (Map) session.getAttribute(flashKey);
+                //if it exists, put all objects in the current request
                 if(flashMap != null)
                 {
                     for(Map.Entry<String, Object> flashData : flashMap.entrySet())
                     {
                         request.setAttribute(flashData.getKey(), flashData.getValue());
                     }
+                    // clean the session
                     session.removeAttribute(flashKey);
                 }
             }
@@ -54,9 +57,11 @@ public class FlashFilter implements Filter
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             Map<String, Object> flashMap = new HashMap<String, Object>();
             Enumeration<String> attributesName = httpRequest.getAttributeNames();
+            // scan request attributes for flash tagged values
             while (attributesName.hasMoreElements())
             {
                 String attributeName = attributesName.nextElement();
+                //if the value is flash tagged, put it in the flash scope map
                 if(attributeName.startsWith("[FLASH]"))
                 {
                     Object value = httpRequest.getAttribute(attributeName);
@@ -66,6 +71,7 @@ public class FlashFilter implements Filter
             }
             if(!flashMap.isEmpty())
             {
+                // if there is any flash scope attribute, persist them in the session
                 httpRequest.getSession(false).setAttribute(flashKey, flashMap);
             }
         }

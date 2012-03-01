@@ -14,7 +14,7 @@ import javax.persistence.Query;
  * User: oli
  * Date: 2/21/12
  * Time: 10:44 PM
- * To change this template use File | Settings | File Templates.
+ * Service to authenticate users.
  */
 @Stateless
 public class AuthenticationService

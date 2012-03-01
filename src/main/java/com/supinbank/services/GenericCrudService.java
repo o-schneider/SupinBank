@@ -11,7 +11,7 @@ import java.util.List;
  * User: oli
  * Date: 2/25/12
  * Time: 5:48 PM
- * To change this template use File | Settings | File Templates.
+ * Generic class to handle all Create, Read, Update and Delete operations within the webapp.
  */
 @Stateless
 public class GenericCrudService
@@ -41,7 +41,7 @@ public class GenericCrudService
     {
         em.merge(entity);
     }
-    
+
     public <T> void delete(T entity)
     {
         em.remove(entity);

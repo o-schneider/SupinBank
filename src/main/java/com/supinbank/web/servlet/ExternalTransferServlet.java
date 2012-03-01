@@ -5,7 +5,7 @@ package com.supinbank.web.servlet;
  * User: oli
  * Date: 2/28/12
  * Time: 10:53 AM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /customer/externalTransfer.jsp page.
  */
 
 import com.supinbank.entities.Account;

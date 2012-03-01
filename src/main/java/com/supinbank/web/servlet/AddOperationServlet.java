@@ -27,7 +27,7 @@ import java.util.Set;
  * User: oli
  * Date: 2/26/12
  * Time: 2:45 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /admin/addOperation.jsp page.
  */
 
 @WebServlet(name = "AddOperationServlet", urlPatterns = "/admin/operations/new")

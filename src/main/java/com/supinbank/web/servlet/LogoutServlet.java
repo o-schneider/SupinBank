@@ -12,7 +12,7 @@ import java.io.IOException;
  * User: oli
  * Date: 2/25/12
  * Time: 12:19 PM
- * To change this template use File | Settings | File Templates.
+ * Servlet that handles /loggedout.jsp page.
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet

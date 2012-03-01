@@ -13,7 +13,7 @@ import java.io.IOException;
  * User: oli
  * Date: 2/29/12
  * Time: 6:19 PM
- * To change this template use File | Settings | File Templates.
+ * Filter to protect sensible data from unauthorized access.
  */
 public abstract class AuthenticationFilter implements Filter
 {
