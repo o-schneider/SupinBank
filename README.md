@@ -7,7 +7,7 @@ How to run it?
 
 To run the web app, you have to 
 
-1) Clone the project on your computer (what a crazy thing)
+1) Clone the project on your computer (what a crazy thing) <br />
 2) Check the persistence.xml and JMS bindings (check the MessageSender class for that) to make them aware of your Glassfish configuration
 3) You have to execute the two .sql file present on the project root on your DB Schema, if not, there may be some bugs
 4) Deploy on your glassfish thanks to maven!
