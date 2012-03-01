@@ -79,7 +79,7 @@ public class ExternalTransferServlet extends HttpServlet
 
         testOperation.setWording(request.getParameter("wording"));
         boolean validWording = ValidationUtil.validate(testOperation, "wording", request);
-
+        boolean error = false;
         if (bban.length() == 23 && validAmount && validWording)
         {
             if (bankCode.equals(this.bankCode) && branchCode.equals(this.branchCode))
@@ -88,13 +88,11 @@ public class ExternalTransferServlet extends HttpServlet
                 if (creditAccount == null)
                 {
                     request.setAttribute("creditAccountError", "This account doesn't exist");
-                    doGet(request, response);
-                    return;
+                    error = true;
                 } else if (creditAccount.getId() == debitAccount.getId())
                 {
                     request.setAttribute("creditAccountError", "Debit account and credit account cannot be the same.");
-                    doGet(request, response);
-                    return;
+                    error = true;
                 } else
                 {
                     transferService.performInternalTransfer(debitAccount, creditAccount, amountNb, wording);
@@ -107,11 +105,22 @@ public class ExternalTransferServlet extends HttpServlet
             }
         } else
         {
+            error = true;
+        }
+
+        if (error)
+        {
+            request.setAttribute("bankCode", bankCode);
+            request.setAttribute("branchCode", branchCode);
+            request.setAttribute("accountNumber", accountNumber);
+            request.setAttribute("key", key);
+
+            request.setAttribute("amount", amount);
+            request.setAttribute("wording", wording);
             request.setAttribute("creditAccountError", "Missing information in bban");
             doGet(request, response);
         }
     }
-
 
     public GenericCrudService getGenericCrudService()
     {

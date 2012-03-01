@@ -45,10 +45,10 @@
             <label class="control-label">Credit account BBAN</label>
 
             <div class="controls">
-                <input type="text" class="input-medium" name="bankCode">
-                <input type="text" class="input-medium" name="branchCode">
-                <input type="text" class="input-xlarge" name="accountNumber">
-                <input type="text" class="input-mini" name="key" size="2">
+                <input type="text" class="input-medium" name="bankCode" id="bankCode" value="${bankCode}">
+                <input type="text" class="input-medium" name="branchCode" id="branchCode" value="${branchCode}">
+                <input type="text" class="input-xlarge" name="accountNumber" id="accountNumber" value="${accountNumber}">
+                <input type="text" class="input-mini" name="key" id="key" value="${key}">
 
                 <div class="help-block">
                     ${creditAccountError}
