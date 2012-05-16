@@ -16,18 +16,5 @@ import javax.validation.constraints.Size;
 @Entity
 public class BankAdvisor extends User
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
 
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
 }

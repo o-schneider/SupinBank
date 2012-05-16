@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: oli
+  Date: 5/15/12
+  Time: 12:14 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Supinbank | #{title}</title>
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:outputStylesheet library="css" name="layout.css"/>
+    <h:outputStylesheet library="js" name="bootstrap.js"/>
+</h:head>
+
+<h:body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
+
+                <h:panelGroup rendered="#{not empty userController.user}">
+                    <h:panelGroup rendered="#{userController.user.admin}">
+                        <ul class="nav">
+                            <li class="${pageContext.request.servletPath eq '/admin/listCustomers.jsp' ? 'active':''}">
+                                <a href="${pageContext.servletContext.contextPath}/admin/customers">List customers</a>
+                            </li>
+                            <li class="${pageContext.request.servletPath eq '/admin/addCustomer.jsp' ? 'active':''}">
+                                <a href="${pageContext.servletContext.contextPath}/admin/customers/new">Add customer</a>
+                            </li>
+                        </ul>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{not userController.user.admin}">
+                        <ul class="nav">
+                            <li class="${pageContext.request.servletPath eq '/customer/listAccounts.jsp' ? 'active':''}">
+                                <a href="${pageContext.servletContext.contextPath}/customer/accounts">My accounts</a>
+                            </li>
+                            <li class="${pageContext.request.servletPath eq '/customer/listOperations.jsp' ? 'active':''}">
+                                <a href="${pageContext.servletContext.contextPath}/customer/operations">My operations</a>
+                            </li>
+                            <li class="dropdown ${pageContext.request.servletPath eq '/customer/externalTransfer.jsp' ? 'active':''}
+                            ${pageContext.request.servletPath eq '/customer/internalTransfer.jsp' ? 'active':''}">
+                                <a href="#"
+                                   class="dropdown-toggle"
+                                   data-toggle="dropdown">
+                                    Perform a transfer
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="${pageContext.servletContext.contextPath}/customer/transfer/internal">Within
+                                            your accounts</a>
+                                    </li>
+                                    <li>
+                                        <a href="${pageContext.servletContext.contextPath}/customer/transfer/external">To
+                                            an external account</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </h:panelGroup>
+                    <ul class="nav pull-right">
+                        <li>
+                            <a>${userController.user.email}</a>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li>
+                            <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                <h:form rendered="#{empty userController.user}" styleClass="login-form form-inline pull-right">
+                    <h:inputText name="email" id="email" value="#{userController.email}"/>
+                    <p:watermark for="email" value="Email"/>
+                    <h:inputSecret name="password" id="password" styleClass="input-small"
+                                   value="#{userController.password}"/>
+                    <p:watermark value="Password" for="password"/>
+                    <h:commandButton styleClass="btn" value="Sign in" action="#{userController.login}"/>
+                </h:form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h:messages id="globalMessages" class="unstyled alert alert-error" showDetail="true"/>
+        <ui:insert name="content"/>
+    </div>
+</h:body>
+
+</html>

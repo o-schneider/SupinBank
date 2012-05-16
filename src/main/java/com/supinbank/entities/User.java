@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 public class User
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
 
     @NotNull
@@ -32,6 +32,21 @@ public class User
     @NotNull
     @Size(min = 6)
     private String password;
+
+    public boolean isAdmin()
+    {
+        return this instanceof BankAdvisor;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     public String getEmail()
     {

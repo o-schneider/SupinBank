@@ -17,10 +17,6 @@ import java.util.List;
 @Entity
 public class Customer extends User
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
     @NotNull
     @Size(min = 1, max = 50)
     private String firstName;
@@ -54,16 +50,6 @@ public class Customer extends User
     public void setAccounts(List<Account> accounts)
     {
         this.accounts = accounts;
-    }
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
     }
 
     public String getFirstName()
