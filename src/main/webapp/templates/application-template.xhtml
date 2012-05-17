@@ -16,6 +16,7 @@
 
 <h:head>
     <title>Supinbank | #{title}</title>
+    <ui:insert name="header" />
     <h:outputStylesheet library="css" name="bootstrap.css"/>
     <h:outputStylesheet library="css" name="layout.css"/>
     <h:outputStylesheet library="js" name="bootstrap.js"/>
@@ -26,7 +27,6 @@
         <div class="navbar-inner">
             <div class="container">
                 <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
-
                 <h:panelGroup rendered="#{not empty userController.user}">
                     <h:panelGroup rendered="#{userController.user.admin}">
                         <ul class="nav">
@@ -67,23 +67,25 @@
                             </li>
                         </ul>
                     </h:panelGroup>
-                    <ul class="nav pull-right">
-                        <li>
-                            <a>${userController.user.email}</a>
-                        </li>
-                        <li class="divider-vertical"></li>
-                        <li>
-                            <a href="${pageContext.servletContext.contextPath}/logout">Logout</a>
-                        </li>
-                    </ul>
+                    <h:form>
+                        <ul class="nav pull-right">
+                            <li>
+                                <a>${userController.user.email}</a>
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li>
+                                <h:commandLink action="#{userController.logout()}" value="Logout"/>
+                            </li>
+                        </ul>
+                    </h:form>
                 </h:panelGroup>
-                <h:form rendered="#{empty userController.user}" styleClass="login-form form-inline pull-right">
+                <h:form rendered="#{userController.user eq null}" styleClass="login-form form-inline pull-right">
                     <h:inputText name="email" id="email" value="#{userController.email}"/>
                     <p:watermark for="email" value="Email"/>
                     <h:inputSecret name="password" id="password" styleClass="input-small"
                                    value="#{userController.password}"/>
                     <p:watermark value="Password" for="password"/>
-                    <h:commandButton styleClass="btn" value="Sign in" action="#{userController.login}"/>
+                    <h:commandButton styleClass="btn" value="Sign in" action="#{userController.login()}"/>
                 </h:form>
 
             </div>

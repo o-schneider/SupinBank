@@ -7,13 +7,14 @@ import com.supinbank.services.AuthenticationService;
 import com.supinbank.services.PasswordService;
 import com.supinbank.utils.MessageUtil;
 import com.supinbank.utils.NavigationUtil;
-import org.primefaces.component.message.Message;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.print.attribute.standard.Severity;
+import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,7 +25,7 @@ import javax.print.attribute.standard.Severity;
  */
 @Named
 @SessionScoped
-public class UserController
+public class UserController implements Serializable
 {
     @Inject
     private AuthenticationService authenticationService;
@@ -72,6 +73,14 @@ public class UserController
             }
         }
         return navigation;
+    }
+
+    public String logout()
+    {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        session.invalidate();
+        return "/loggedout" + NavigationUtil.redirect;
+
     }
 
     public String getEmail()

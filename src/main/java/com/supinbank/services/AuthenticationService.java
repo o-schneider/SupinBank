@@ -1,6 +1,5 @@
 package com.supinbank.services;
 
-import com.supinbank.entities.BankAdvisor;
 import com.supinbank.entities.User;
 
 import javax.ejb.Stateless;
@@ -8,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,7 +17,7 @@ import javax.persistence.Query;
  * To change this template use File | Settings | File Templates.
  */
 @Stateless
-public class AuthenticationService
+public class AuthenticationService implements Serializable
 {
     @PersistenceContext
     EntityManager em;

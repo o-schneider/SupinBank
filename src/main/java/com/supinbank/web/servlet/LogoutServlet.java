@@ -15,6 +15,7 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
+@Deprecated
 public class LogoutServlet extends HttpServlet
 {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

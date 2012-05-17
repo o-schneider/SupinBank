@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/application-template.xhtml">
+
+
+    <ui:define name="header">
+        <meta http-equiv="Refresh" content="5;url=#{facesContext.externalContext.requestContextPath}/index.xhtml"/>
+    </ui:define>
+
+    <ui:param name="title" value="Bye bye"/>
+
+    <ui:define name="content">
+        <h1>Bye bye</h1>
+        <hr/>
+        <p>You have been logged out and will be redirected to the home page. <br/>
+            <h:outputLink
+                    value="#{facesContext.externalContext.requestContextPath}/index.xhtml">Click here if you don't want to wait.</h:outputLink>
+        </p>
+    </ui:define>
+
+</ui:composition>

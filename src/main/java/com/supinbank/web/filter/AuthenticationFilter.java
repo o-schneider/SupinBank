@@ -30,13 +30,15 @@ public abstract class AuthenticationFilter implements Filter
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        Object controller = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userController");
+        Object controller = httpRequest.getSession().getAttribute("userController");
 
         if (controller != null && controller instanceof UserController)
         {
             UserController userController = (UserController) controller;
 
-            if (userController.getUser() == null || !isUserAuthorized(userController.getUser()))
+            User user = userController.getUser();
+
+            if (user == null || !isUserAuthorized(user))
             {
                 httpResponse.sendRedirect(request.getServletContext().getContextPath() + "/");
             }

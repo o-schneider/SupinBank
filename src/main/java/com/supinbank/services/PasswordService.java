@@ -2,10 +2,10 @@ package com.supinbank.services;
 
 
 import javax.ejb.Stateless;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Logger;
 import java.util.Formatter;
 
 /**
@@ -16,7 +16,7 @@ import java.util.Formatter;
  * To change this template use File | Settings | File Templates.
  */
 @Stateless
-public class PasswordService
+public class PasswordService implements Serializable
 {
 
     public String createHash(String password) throws Exception

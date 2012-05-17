@@ -24,6 +24,7 @@ import java.util.logging.LoggingMXBean;
  * To change this template use File | Settings | File Templates.
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/home"})
+@Deprecated
 public class LoginServlet extends HttpServlet
 {
     @Inject
