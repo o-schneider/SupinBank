@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Named
 @SessionScoped
-public class CustomerController implements Serializable
+public class ListCustomerController implements Serializable
 {
-
+    private
 }
