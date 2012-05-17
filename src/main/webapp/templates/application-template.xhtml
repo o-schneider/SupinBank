@@ -14,40 +14,44 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
+<ui:param name="currentPath" value="#{facesContext.externalContext.requestContextPath}"/>
+
 <h:head>
     <title>Supinbank | #{title}</title>
-    <ui:insert name="header" />
+    <ui:insert name="header"/>
     <h:outputStylesheet library="css" name="bootstrap.css"/>
     <h:outputStylesheet library="css" name="layout.css"/>
     <h:outputStylesheet library="js" name="bootstrap.js"/>
 </h:head>
 
+
 <h:body>
+
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="${pageContext.servletContext.contextPath}">SupinBank</a>
+                <h:link class="brand" outcome="/index" value="SupinBank"/>
                 <h:panelGroup rendered="#{not empty userController.user}">
                     <h:panelGroup rendered="#{userController.user.admin}">
                         <ul class="nav">
-                            <li class="${pageContext.request.servletPath eq '/admin/listCustomers.jsp' ? 'active':''}">
-                                <a href="${pageContext.servletContext.contextPath}/admin/customers">List customers</a>
+                            <li class="#{currentPath eq '/admin/customers.xhtml' ? 'active':''}">
+                                <h:link value="List customers" outcome="/admin/customers"/>
                             </li>
-                            <li class="${pageContext.request.servletPath eq '/admin/addCustomer.jsp' ? 'active':''}">
-                                <a href="${pageContext.servletContext.contextPath}/admin/customers/new">Add customer</a>
+                            <li class="#{currentPath eq '/admin/addCustomer.jsp' ? 'active':''}">
+                                <h:link value="Add customer" outcome="/admin/customers/new"/>
                             </li>
                         </ul>
                     </h:panelGroup>
                     <h:panelGroup rendered="#{not userController.user.admin}">
                         <ul class="nav">
-                            <li class="${pageContext.request.servletPath eq '/customer/listAccounts.jsp' ? 'active':''}">
-                                <a href="${pageContext.servletContext.contextPath}/customer/accounts">My accounts</a>
+                            <li class="#{currentPath eq '/customer/listAccounts.jsp' ? 'active':''}">
+                                <h:link value="My accounts" outcome="/customer/accounts"/>
                             </li>
-                            <li class="${pageContext.request.servletPath eq '/customer/listOperations.jsp' ? 'active':''}">
-                                <a href="${pageContext.servletContext.contextPath}/customer/operations">My operations</a>
+                            <li class="#{currentPath eq '/customer/listOperations.jsp' ? 'active':''}">
+                                <h:link value="My operations" outcome="/customer/operations"/>
                             </li>
-                            <li class="dropdown ${pageContext.request.servletPath eq '/customer/externalTransfer.jsp' ? 'active':''}
-                            ${pageContext.request.servletPath eq '/customer/internalTransfer.jsp' ? 'active':''}">
+                            <li class="dropdown #{currentPath eq '/customer/externalTransfer.jsp' ? 'active':''}
+                                       #{currentPath eq '/customer/internalTransfer.jsp' ? 'active':''}">
                                 <a href="#"
                                    class="dropdown-toggle"
                                    data-toggle="dropdown">
@@ -56,12 +60,10 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="${pageContext.servletContext.contextPath}/customer/transfer/internal">Within
-                                            your accounts</a>
+                                        <h:link value="Within your accounts" outcome="/customer/transfer/internal"/>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.servletContext.contextPath}/customer/transfer/external">To
-                                            an external account</a>
+                                        <h:link value="Within your accounts" outcome="/customer/transfer/internal"/>
                                     </li>
                                 </ul>
                             </li>
