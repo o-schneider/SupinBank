@@ -20,6 +20,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @WebServlet(name = "ListCustomersServlet", urlPatterns = {"/admin/customers"})
+@Deprecated
 public class ListCustomersServlet extends HttpServlet
 {
     @Inject

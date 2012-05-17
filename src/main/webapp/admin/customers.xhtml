@@ -2,6 +2,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
                 template="/templates/application-template.xhtml">
 
     <ui:param name="title" value="Admin"/>
@@ -10,18 +11,27 @@
         <h1>Customer list</h1>
         <hr/>
 
-        <!--<p:dataTable value="#{listCustomerController.customers}" var="#{customer}">-->
-            <!--<p:column headerText="Name">-->
-                <!--#{customer.name}-->
-            <!--</p:column>-->
-            <!--<p:column headerText="Email">-->
-                <!--#{customer.email}-->
-            <!--</p:column>-->
-            <!--<p:column>-->
-                <!--<h:outputLink-->
-                        <!--value="#{facesContext.externalContext.requestContextPath}/admin/accounts">Details</h:outputLink>-->
-            <!--</p:column>-->
-        <!--</p:dataTable>-->
+        <h:dataTable value="#{listCustomerController.customers}" var="customer" styleClass="table table-striped">
+            <h:column>
+                <f:facet name="header">
+                    Name
+                </f:facet>
+                #{customer.firstName} #{customer.lastName}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Email
+                </f:facet>
+                #{customer.email}
+            </h:column>
+            <h:column>
+                <h:outputLink value="#{facesContext.externalContext.requestContextPath}/admin/accounts">
+                    Details
+                    <f:param name="id" value="#{customer.id}"/>
+                </h:outputLink>
+            </h:column>
+        </h:dataTable>
+
     </ui:define>
 
 </ui:composition>
