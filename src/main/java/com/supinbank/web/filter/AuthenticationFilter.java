@@ -3,7 +3,9 @@ package com.supinbank.web.filter;
 import com.supinbank.controllers.UserController;
 import com.supinbank.entities.BankAdvisor;
 import com.supinbank.entities.User;
+import com.supinbank.utils.MessageUtil;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -30,22 +32,19 @@ public abstract class AuthenticationFilter implements Filter
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        Object controller = httpRequest.getSession().getAttribute("userController");
+        Object controller = httpRequest.getSession(true).getAttribute("userController");
+        User user = null;
 
         if (controller != null && controller instanceof UserController)
         {
             UserController userController = (UserController) controller;
-
-            User user = userController.getUser();
-
-            if (user == null || !isUserAuthorized(user))
-            {
-                httpResponse.sendRedirect(request.getServletContext().getContextPath() + "/");
-            }
-        } else
-        {
-            chain.doFilter(request, response);
+            user = userController.getUser();
         }
+
+        if (user != null && isUserAuthorized(user))
+            chain.doFilter(request, response);
+        else
+            httpResponse.sendRedirect(request.getServletContext().getContextPath() + "/");
     }
 
     protected abstract boolean isUserAuthorized(Object user);

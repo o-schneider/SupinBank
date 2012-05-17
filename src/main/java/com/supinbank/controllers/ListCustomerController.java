@@ -1,8 +1,14 @@
 package com.supinbank.controllers;
 
-import javax.enterprise.context.SessionScoped;
+import com.supinbank.entities.Customer;
+import com.supinbank.services.GenericCrudService;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,8 +18,26 @@ import java.io.Serializable;
  * To change this template use File | Settings | File Templates.
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class ListCustomerController implements Serializable
 {
-    private
+    private List<Customer> customers;
+    @Inject
+    private GenericCrudService genericCrudService;
+
+    @PostConstruct
+    public void init()
+    {
+        customers = genericCrudService.readAll(Customer.class);
+    }
+
+    public List<Customer> getCustomers()
+    {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers)
+    {
+        this.customers = customers;
+    }
 }
