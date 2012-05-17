@@ -7,6 +7,7 @@ import com.supinbank.utils.MessageUtil;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,9 @@ import java.io.IOException;
  */
 public abstract class AuthenticationFilter implements Filter
 {
+    @Inject
+    private UserController userController;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException
     {
@@ -29,17 +33,9 @@ public abstract class AuthenticationFilter implements Filter
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
     {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        Object controller = httpRequest.getSession(true).getAttribute("userController");
-        User user = null;
-
-        if (controller != null && controller instanceof UserController)
-        {
-            UserController userController = (UserController) controller;
-            user = userController.getUser();
-        }
+        User user = userController.getUser();
 
         if (user != null && isUserAuthorized(user))
             chain.doFilter(request, response);
