@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:helper="http://java.sun.com/jsf/composite/components"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title" value="Customer"/>
+
+
+    <ui:define name="content">
+        <h1>Perform a transfer</h1>
+        <hr/>
+
+        <h:form styleClass="form-horizontal">
+            <helper:controlGroup label="From" input="#{from}">
+                <h:selectOneMenu binding="#{from}">
+
+                </h:selectOneMenu>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="To" input="#{to}">
+                <h:selectOneMenu binding="#{to}">
+
+                </h:selectOneMenu>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="Amount" input="#{amount}">
+                <h:inputText binding="#{amount}"/>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="Wording" input="#{woding}">
+                <h:inputText binding="#{wording}"/>
+            </helper:controlGroup>
+
+            <div class="form-actions">
+                <h:commandButton value="Perform transfer"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
