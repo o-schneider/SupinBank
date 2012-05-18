@@ -3,12 +3,46 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:helper="http://java.sun.com/jsf/composite/components"
                 template="/templates/application-template.xhtml">
 
     <ui:param name="title" value="Admin"/>
 
-    <ui:define name="content">
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="id" value="#{newOperationController.accountId}"/>
+            <f:event type="preRenderView" listener="#{newOperationController.loadAccount}"/>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form styleClass="form-horizontal">
+            <h1>New operation</h1>
+            <hr/>
+            <fieldset>
+
+                <legend>Account #{newOperationController.account.name} owned by
+                    #{newOperationController.account.accountOwner.firstName}
+                    #{newOperationController.account.accountOwner.lastName}
+                </legend>
+
+                <helper:controlGroup label="Amount" input="#{amount}">
+                    <h:inputText id="name" binding="#{amount}" styleClass="input-xlarge"
+                                 value="#{newOperationController.operation.amount}"/>
+                </helper:controlGroup>
+
+                <helper:controlGroup label="Wording" input="#{wording}">
+                    <h:inputText id="name" binding="#{wording}" styleClass="input-xlarge"
+                                 value="#{newOperationController.operation.wording}"/>
+                </helper:controlGroup>
+
+                <div class="form-actions">
+                    <h:commandButton value="Add operation" action="#{newOperationController.validate}"
+                                     styleClass="btn btn-primary"/>
+                </div>
+            </fieldset>
+        </h:form>
     </ui:define>
 
 </ui:composition>

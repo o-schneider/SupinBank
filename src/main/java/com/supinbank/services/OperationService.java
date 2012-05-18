@@ -21,6 +21,11 @@ public class OperationService
     @Inject
     private GenericCrudService genericCrudService;
 
+    public void createOperation(Account account, Operation operation)
+    {
+        this.createOperation(account, operation.getAmount(), operation.getWording());
+    }
+
     public void createOperation(Account account, BigDecimal amount, String wording)
     {
         Operation operation = new Operation();

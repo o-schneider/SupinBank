@@ -30,6 +30,13 @@ public class AccountService
     @PersistenceContext
     EntityManager em;
 
+    public Account completeRead(Integer accountId)
+    {
+        Account account = em.find(Account.class, accountId);
+        account.getOperations().size();
+        return account;
+    }
+
     public List<Account> readUserAccounts(Customer accountOwner)
     {
         Query query = em.createNamedQuery("Account.readUserAccounts");
