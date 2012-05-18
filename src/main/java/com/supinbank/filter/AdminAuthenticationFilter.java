@@ -1,12 +1,8 @@
-package com.supinbank.web.filter;
+package com.supinbank.filter;
 
 import com.supinbank.entities.BankAdvisor;
 
-import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,18 +1,13 @@
 package com.supinbank.controllers;
 
 import com.supinbank.entities.Account;
-import com.supinbank.entities.Operation;
 import com.supinbank.utils.MessageUtil;
 import com.supinbank.utils.NavigationUtil;
-import com.supinbank.web.utils.ValidationUtil;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,7 +52,7 @@ public class ExternalTransferController extends TransferController
 
         if (bban.length() == 23)
         {
-            if (bankCode.equals(this.bankCode) && branchCode.equals(this.branchCode))
+            if (bankCode.equals(this.supinBankBankCode) && branchCode.equals(this.supinBankBranchCode))
             {
                 Account creditAccount = getAccountService().readAccountByBban(bban);
                 if (creditAccount == null)

@@ -1,15 +1,10 @@
-package com.supinbank.web.filter;
+package com.supinbank.filter;
 
 import com.supinbank.controllers.UserController;
-import com.supinbank.entities.BankAdvisor;
 import com.supinbank.entities.User;
-import com.supinbank.utils.MessageUtil;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
