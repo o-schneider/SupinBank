@@ -33,7 +33,8 @@ public class AccountService
     public Account completeRead(Integer accountId)
     {
         Account account = em.find(Account.class, accountId);
-        account.getOperations().size();
+        if (account != null)
+            account.getOperations().size();
         return account;
     }
 

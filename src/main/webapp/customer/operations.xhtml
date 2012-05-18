@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title" value="Customer"/>
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="id" value="#{listOperationController.accountId}"/>
+            <f:event type="preRenderView" listener="#{listOperationController.loadFromParameters}"/>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="content">
+        <h1>Operations</h1>
+        <hr/>
+
+        <h:form styleClass="form-inline ">
+            <div class="row">
+                <span class="span3">
+                <h:selectOneMenu value="#{listOperationController.accountId}">
+                    <f:selectItems value="#{listOperationController.accounts}" var="account" itemLabel="#{account.name}"
+                                   itemValue="#{account.id}"/>
+                </h:selectOneMenu>
+                </span>
+                <span class="span1">
+                <h:commandButton value="See" styleClass="btn btn-primary">
+                    <f:ajax execute="@form" listener="#{listOperationController.loadOperations}"
+                            render=":operations :globalMessages"/>
+                </h:commandButton>
+                </span>
+            </div>
+        </h:form>
+
+        <h:panelGroup id="operations">
+            <h:dataTable rendered="#{not empty listOperationController.operations}"
+                         value="#{listOperationController.operations}" var="operation"
+                         styleClass="table table-striped">
+                <h:column>
+                    <f:facet name="header">
+                        Id
+                    </f:facet>
+                    #{operation.id}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Date
+                    </f:facet>
+                    <h:outputText value="#{operation.date}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Wording
+                    </f:facet>
+                    #{operation.wording}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Amount
+                    </f:facet>
+                    #{operation.amount}
+                </h:column>
+            </h:dataTable>
+
+            <h:panelGroup rendered="#{empty listOperationController.operations}">
+                <h2>No operations on this account</h2>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

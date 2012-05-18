@@ -113,4 +113,20 @@ public class Account
     {
         this.bban = bban;
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        boolean equals = false;
+        if (obj instanceof Account)
+        {
+            Account account = (Account) obj;
+            if (account.getId() == this.id)
+            {
+                equals = true;
+            }
+        }
+
+        return equals;
+    }
 }

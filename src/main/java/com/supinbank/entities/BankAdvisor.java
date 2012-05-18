@@ -1,10 +1,7 @@
 package com.supinbank.entities;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.persistence.Entity;
 
 /**
  * Created by IntelliJ IDEA.

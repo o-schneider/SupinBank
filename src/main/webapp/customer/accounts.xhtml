@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title" value="Customer"/>
+
+
+    <ui:define name="content">
+        <h1>Your accounts</h1>
+        <hr/>
+
+        <h:dataTable rendered="#{not empty listAccountsController.accounts}" value="#{listAccountsController.accounts}"
+                     var="account" styleClass="table table-striped">
+            <h:column>
+                <f:facet name="header">
+                    Id
+                </f:facet>
+                #{account.id}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    Name
+                </f:facet>
+                <h:link value="#{account.name}" outcome="operations">
+                    <f:param name="id" value="#{account.id}"/>
+                </h:link>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    Amount
+                </f:facet>
+                #{account.amount}
+            </h:column>
+        </h:dataTable>
+
+        <h:panelGroup rendered="#{empty listAccountsController.accounts}">
+            You don't have any account
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
