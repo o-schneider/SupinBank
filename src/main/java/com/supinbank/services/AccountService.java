@@ -54,6 +54,7 @@ public class AccountService
         try
         {
             account = (Account) query.getSingleResult();
+            account.getOperations().size();
         } catch (NoResultException e)
         {
             account = null;

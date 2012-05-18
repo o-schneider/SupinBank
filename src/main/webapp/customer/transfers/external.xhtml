@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:helper="http://java.sun.com/jsf/composite/components"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title" value="Customer"/>
+
+
+    <ui:define name="content">
+        <h1>Perform a transfer</h1>
+        <hr/>
+
+        <h:form styleClass="form-horizontal" prependId="false">
+            <helper:controlGroup label="From" input="#{from}">
+                <h:selectOneMenu binding="#{from}" value="#{externalTransferController.debitAccountId}">
+                    <f:selectItems value="#{externalTransferController.accounts}" var="account"
+                                   itemLabel="#{account.name}" itemValue="#{account.id}"/>
+                </h:selectOneMenu>
+            </helper:controlGroup>
+
+            <div class="control-group #{bankCode.valid? '':'error'}">
+                <label class="control-label">Credit account BBAN</label>
+
+                <div class="controls">
+                    <h:inputText id="bankCode" binding="#{bankCode}" styleClass="input-medium"
+                                 value="#{externalTransferController.bankCode}"/>
+                    <h:inputText id="branchCode" styleClass="input-medium"
+                                 value="#{externalTransferController.branchCode}"/>
+                    <h:inputText id="accountNumber" styleClass="input-xlarge"
+                                 value="#{externalTransferController.accountNumber}"/>
+                    <h:inputText id="key" styleClass="input-mini" value="#{externalTransferController.key}"/>
+                    <span class="help-inline">
+                        <h:message for="#{bankCode}"/>
+                    </span>
+                </div>
+            </div>
+
+            <helper:controlGroup label="Amount" input="#{amount}">
+                <h:inputText binding="#{amount}" value="#{externalTransferController.operation.amount}"/>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="Wording" input="#{wording}">
+                <h:inputText binding="#{wording}" value="#{externalTransferController.operation.wording}"/>
+            </helper:controlGroup>
+
+            <div class="form-actions">
+                <h:commandButton value="Perform transfer" styleClass="btn btn-primary"
+                                 action="#{externalTransferController.validate}"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -15,27 +15,30 @@
 
         <h:form styleClass="form-horizontal">
             <helper:controlGroup label="From" input="#{from}">
-                <h:selectOneMenu binding="#{from}">
-
+                <h:selectOneMenu binding="#{from}" value="#{internalTransferController.debitAccountId}">
+                    <f:selectItems value="#{internalTransferController.accounts}" var="account"
+                                   itemLabel="#{account.name}" itemValue="#{account.id}"/>
                 </h:selectOneMenu>
             </helper:controlGroup>
 
             <helper:controlGroup label="To" input="#{to}">
-                <h:selectOneMenu binding="#{to}">
-
+                <h:selectOneMenu binding="#{to}" value="#{internalTransferController.creditAccountId}">
+                    <f:selectItems value="#{internalTransferController.accounts}" var="account"
+                                   itemLabel="#{account.name}" itemValue="#{account.id}"/>
                 </h:selectOneMenu>
             </helper:controlGroup>
 
             <helper:controlGroup label="Amount" input="#{amount}">
-                <h:inputText binding="#{amount}"/>
+                <h:inputText binding="#{amount}" value="#{internalTransferController.operation.amount}"/>
             </helper:controlGroup>
 
-            <helper:controlGroup label="Wording" input="#{woding}">
-                <h:inputText binding="#{wording}"/>
+            <helper:controlGroup label="Wording" input="#{wording}">
+                <h:inputText binding="#{wording}" value="#{internalTransferController.operation.wording}"/>
             </helper:controlGroup>
 
             <div class="form-actions">
-                <h:commandButton value="Perform transfer"/>
+                <h:commandButton value="Perform transfer" styleClass="btn btn-primary"
+                                 action="#{internalTransferController.validate}"/>
             </div>
         </h:form>
     </ui:define>
