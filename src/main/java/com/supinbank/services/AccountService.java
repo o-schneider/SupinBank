@@ -2,13 +2,16 @@ package com.supinbank.services;
 
 import com.supinbank.entities.Account;
 import com.supinbank.entities.Customer;
+import com.supinbank.entities.InterestPlan;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,9 +54,24 @@ public class AccountService
         return account;
     }
 
-    public void create(Account account)
+    public void create(Account account, Customer customer, InterestPlan plan)
     {
+        account.setInterestPlan(plan);
+        account.setAccountOwner(customer);
+        account.setAmount(BigDecimal.ZERO);
+        account.setAccountOwner(customer);
+
         em.persist(account);
+
+        if (customer.getAccounts() == null)
+        {
+            customer.setAccounts(new ArrayList<Account>());
+        }
+
+        customer.getAccounts().add(account);
+
+        em.merge(customer);
+
 
         String accountNumber = String.format("%011d", account.getId());
         String bbanWithoutKey = bankCode + branchCode + accountNumber;

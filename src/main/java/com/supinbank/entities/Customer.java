@@ -39,7 +39,7 @@ public class Customer extends User
     @NotNull
     private Integer phone;
 
-    @OneToMany(mappedBy = "accountOwner")
+    @OneToMany(mappedBy = "accountOwner", fetch = FetchType.EAGER)
     private List<Account> accounts;
 
     public List<Account> getAccounts()

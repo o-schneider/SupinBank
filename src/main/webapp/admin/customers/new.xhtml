@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:helper="http://java.sun.com/jsf/composite/components"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title" value="Add a new Customer"/>
+
+    <ui:define name="content">
+        <h1>Add a new Customer</h1>
+        <hr/>
+
+        <h:form class="form-horizontal">
+            <helper:controlGroup label="First name" input="#{firstname}">
+                <h:inputText id="firstname" binding="#{firstname}" styleClass="input-xlarge"
+                             value="#{newCustomerController.customer.firstName}"/>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="Last name" input="#{lastname}">
+                <h:inputText id="lastname" binding="#{lastname}" styleClass="input-xlarge"
+                             value="#{newCustomerController.customer.lastName}"/>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="Email" input="#{email}">
+                <h:inputText id="email" binding="#{email}" styleClass="input-xlarge"
+                             value="#{newCustomerController.customer.email}"/>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="Address" input="#{address}">
+                <h:inputText id="address" binding="#{address}" styleClass="input-xlarge"
+                             value="#{newCustomerController.customer.address}"/>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="ZIP Code" input="#{zip}">
+                <h:inputText id="zip" binding="#{zip}" styleClass="input-xlarge"
+                             value="#{newCustomerController.customer.zipCode}"/>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="City" input="#{city}">
+                <h:inputText id="city" binding="#{city}" styleClass="input-xlarge"
+                             value="#{newCustomerController.customer.city}"/>
+            </helper:controlGroup>
+
+            <helper:controlGroup label="Phone" input="#{phone}">
+                <h:inputText id="phone" binding="#{phone}" styleClass="input-xlarge"
+                             value="#{newCustomerController.customer.phone}"/>
+            </helper:controlGroup>
+
+            <div class="form-actions">
+                <h:commandButton value="Add customer" action="#{newCustomerController.validate}"
+                                 styleClass="btn btn-primary"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

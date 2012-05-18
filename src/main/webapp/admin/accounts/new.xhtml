@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:helper="http://java.sun.com/jsf/composite/components"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title" value="Admin"/>
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{newAccountController.checkCustomer(flash.customer)}"/>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form styleClass="form-horizontal">
+            <fieldset>
+                <legend>Account for #{newAccountController.customer.firstName} #{newAccountController.customer.lastName}</legend>
+
+                <helper:controlGroup label="Name" input="#{name}">
+                    <h:inputText id="name" binding="#{name}" styleClass="input-xlarge"
+                                 value="#{newAccountController.account.name}"/>
+                </helper:controlGroup>
+
+                <helper:controlGroup label="Interest plan" input="#{interestPlan}">
+                    <h:selectOneMenu id="name" binding="#{interestPlan}" styleClass="input-xlarge"
+                                     value="#{newAccountController.interestPlanId}">
+                        <f:selectItems value="#{newAccountController.interestPlans}" var="interestPlan"
+                                       itemLabel="#{interestPlan.name}" itemValue="#{interestPlan.id}"/>
+                    </h:selectOneMenu>
+                </helper:controlGroup>
+
+                <div class="form-actions">
+                    <h:commandButton value="Add account" action="#{newAccountController.validate}"
+                                     styleClass="btn btn-primary"/>
+                </div>
+            </fieldset>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

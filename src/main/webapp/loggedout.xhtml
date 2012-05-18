@@ -17,8 +17,8 @@
         <h1>Bye bye</h1>
         <hr/>
         <p>You have been logged out and will be redirected to the home page. <br/>
-            <h:outputLink
-                    value="#{facesContext.externalContext.requestContextPath}/index.xhtml">Click here if you don't want to wait.</h:outputLink>
+            <h:link
+                    outcome="index.xhtml" value="Click here if you don't want to wait."/>
         </p>
     </ui:define>
 

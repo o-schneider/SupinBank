@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title"
+              value="#{showCustomerController.customer.firstName} #{showCustomerController.customer.lastName}"/>
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="id" value="#{showCustomerController.customerId}"/>
+            <f:event type="preRenderView" listener="#{showCustomerController.loadCustomer}"/>
+        </f:metadata>
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h1>#{showCustomerController.customer.firstName} #{showCustomerController.customer.lastName} accounts</h1>
+        <hr/>
+        <p>Email : #{showCustomerController.customer.email}</p>
+
+        <h:form>
+            <div class="row">
+            <span class="span2 offset10">
+                <h:commandButton action="#{showCustomerController.addAccount}" value="Add account"
+                                 styleClass="span2 btn btn-primary"/>
+            </span>
+            </div>
+        </h:form>
+
+        <h:dataTable rendered="#{not empty showCustomerController.customer.accounts}"
+                     value="#{showCustomerController.customer.accounts}" var="account" styleClass="table table-striped">
+            <h:column>
+                <f:facet name="header">
+                    Id
+                </f:facet>
+                #{account.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Name
+                </f:facet>
+                #{account.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Amount
+                </f:facet>
+                #{account.amount}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Interest plan
+                </f:facet>
+                #{account.interestPlan.name}
+            </h:column>
+            <h:column>
+                <h:link outcome="/admin/oprations/new" value="Add operation">
+                    <f:param name="id" value="#{account.id}"/>
+                </h:link>
+            </h:column>
+        </h:dataTable>
+        <h:panelGroup rendered="#{empty showCustomerController.customer.accounts}">
+            <h2>No accounts</h2>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

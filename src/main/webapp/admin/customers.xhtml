@@ -5,13 +5,14 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/templates/application-template.xhtml">
 
-    <ui:param name="title" value="Admin"/>
+    <ui:param name="title" value="Bank Advisor"/>
 
     <ui:define name="content">
         <h1>Customer list</h1>
         <hr/>
 
-        <h:dataTable value="#{listCustomerController.customers}" var="customer" styleClass="table table-striped">
+        <h:dataTable rendered="#{not empty listCustomerController.customers}"
+                     value="#{listCustomerController.customers}" var="customer" styleClass="table table-striped">
             <h:column>
                 <f:facet name="header">
                     Name
@@ -25,13 +26,15 @@
                 #{customer.email}
             </h:column>
             <h:column>
-                <h:outputLink value="#{facesContext.externalContext.requestContextPath}/admin/accounts">
-                    Details
+                <h:link outcome="/admin/customers/show" value="Details">
                     <f:param name="id" value="#{customer.id}"/>
-                </h:outputLink>
+                </h:link>
             </h:column>
         </h:dataTable>
-
+        <h:panelGroup rendered="#{empty listCustomerController.customers}">
+            <h2>No customer yet.</h2>
+            <h:link value="Create the first one!" outcome="/admin/customers/new"/>
+        </h:panelGroup>
     </ui:define>
 
 </ui:composition>
