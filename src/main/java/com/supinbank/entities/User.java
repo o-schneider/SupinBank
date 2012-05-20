@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,9 +16,11 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "User.login", query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
 })
+
 public class User
 {
     @Id
@@ -31,6 +35,7 @@ public class User
 
     @NotNull
     @Size(min = 6)
+    @XmlTransient
     private String password;
 
     public boolean isAdmin()
@@ -58,6 +63,7 @@ public class User
         this.email = email;
     }
 
+    @XmlTransient
     public String getPassword()
     {
         return password;

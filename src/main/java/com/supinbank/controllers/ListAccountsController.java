@@ -31,7 +31,6 @@ public class ListAccountsController
     @PostConstruct
     public void init()
     {
-        System.out.println("Customer : " + userController.getUser().getEmail());
         accounts = accountService.readUserAccounts((Customer) userController.getUser());
     }
 
