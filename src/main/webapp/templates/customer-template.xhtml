@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title" value="Customer"/>
+
+    <ui:define name="brand">
+        <h:link class="brand" outcome="/customer/accounts" value="SupinBank"/>
+    </ui:define>
+
+    <ui:define name="navbar">
+        <li>
+            <h:link value="My accounts" outcome="/customer/accounts"/>
+        </li>
+        <li>
+            <h:link value="My operations" outcome="/customer/operations"/>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle"
+               data-toggle="dropdown">
+                Perform a transfer
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <h:link value="Within your accounts" outcome="/customer/transfers/internal"/>
+                </li>
+                <li>
+                    <h:link value="To an external account" outcome="/customer/transfers/external"/>
+                </li>
+            </ul>
+        </li>
+    </ui:define>
+</ui:composition>

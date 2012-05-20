@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/application-template.xhtml">
+
+    <ui:param name="title" value="Bank Advisoe"/>
+
+    <ui:define name="brand">
+        <h:link class="brand" outcome="/admin/customers" value="SupinBank"/>
+    </ui:define>
+
+    <ui:define name="navbar">
+        <li>
+            <h:link value="List customers" outcome="/admin/customers"/>
+        </li>
+        <li>
+            <h:link value="Add customer" outcome="/admin/customers/new"/>
+        </li>
+    </ui:define>
+</ui:composition>

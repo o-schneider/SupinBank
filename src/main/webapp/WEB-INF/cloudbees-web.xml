@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<cloudbees-web-app xmlns="http://www.cloudbees.com/xml/webapp/1">
+    <!-- Application ID (formatted CB_ACCOUNT/APPNAME) -->
+    <appid>oschneider/supinbank</appid>
+
+    <!-- DataSources (use names refererenced via <resource-ref> in WEB-INF/web.xml) -->
+    <resource name="jdbc/supinbank" auth="Container" type="javax.sql.DataSource">
+        <param name="username" value="oli"/>
+        <param name="password" value="admin"/>
+        <param name="url" value="jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/supinbank?autoReconnect=true"/>
+    </resource>
+</cloudbees-web-app>

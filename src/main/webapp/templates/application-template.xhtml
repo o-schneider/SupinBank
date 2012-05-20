@@ -36,55 +36,23 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <h:link class="brand" outcome="/index" value="SupinBank"/>
-                <h:panelGroup rendered="#{not empty userController.user}">
-                    <h:panelGroup rendered="#{userController.user.admin}">
-                        <ul class="nav">
-                            <li>
-                                <h:link value="List customers" outcome="/admin/customers"/>
-                            </li>
-                            <li>
-                                <h:link value="Add customer" outcome="/admin/customers/new"/>
-                            </li>
-                        </ul>
-                    </h:panelGroup>
-                    <h:panelGroup rendered="#{not userController.user.admin}">
-                        <ul class="nav">
-                            <li>
-                                <h:link value="My accounts" outcome="/customer/accounts"/>
-                            </li>
-                            <li>
-                                <h:link value="My operations" outcome="/customer/operations"/>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle"
-                                   data-toggle="dropdown">
-                                    Perform a transfer
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <h:link value="Within your accounts" outcome="/customer/transfers/internal"/>
-                                    </li>
-                                    <li>
-                                        <h:link value="To an external account" outcome="/customer/transfers/external"/>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </h:panelGroup>
-                    <h:form>
-                        <ul class="nav pull-right">
-                            <li>
-                                <a>${userController.user.email}</a>
-                            </li>
-                            <li class="divider-vertical"></li>
-                            <li>
-                                <h:commandLink action="#{userController.logout()}" value="Logout"/>
-                            </li>
-                        </ul>
-                    </h:form>
-                </h:panelGroup>
+                <ui:insert name="brand">
+                    <h:link class="brand" outcome="/index" value="SupinBank"/>
+                </ui:insert>
+                <ul class="nav">
+                    <ui:insert name="navbar"/>
+                </ul>
+                <h:form rendered="#{not empty userController.user}">
+                    <ul class="nav pull-right">
+                        <li>
+                            <a>${userController.user.email}</a>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li>
+                            <h:commandLink action="#{userController.logout()}" value="Logout"/>
+                        </li>
+                    </ul>
+                </h:form>
                 <h:form rendered="#{userController.user eq null}" styleClass="login-form form-inline pull-right">
                     <h:inputText name="email" id="email" value="#{userController.email}"/>
                     <p:watermark for="email" value="Email"/>
