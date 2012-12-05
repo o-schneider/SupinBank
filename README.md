@@ -25,5 +25,6 @@ Q : As I am trying to log in with valid credentials, the application just says m
 A : Make sure your database is up and the bindings are valid. If they are, reboot glassfish and try again.
 
 There is a JSF version of the application on the JSF-port branch.<br />
+JSf version on the cloude here : http://supinbank.oschneider.cloudbees.net/index.xhtml
 
-
+Released under the General Public License 3. Have a look at the license file.
