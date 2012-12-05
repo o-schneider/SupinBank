@@ -24,11 +24,11 @@ import java.util.concurrent.Future;
 @Stateless
 public class MailService
 {
-    private final String SMTP_HOST_NAME = "smtp.gmail.com";
+    private final String SMTP_HOST_NAME = "add yours";
     private final String SMTP_PORT = "465";
     private final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-    private final String USERNAME = "supinbankmailing@gmail.com ";
-    private final String PASSWORD = "soupedelegume67";
+    private final String USERNAME = "your smtp client";
+    private final String PASSWORD = "yout smtp password";
 
     @Asynchronous
     public Future<Boolean> sendConfirmationMail(Customer customer, String clearPassword)
